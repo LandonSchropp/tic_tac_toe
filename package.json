@@ -3,7 +3,8 @@
   "description": "A simple tic-tac-toe game",
   "author": "Landon Schropp <schroppl@gmail.com>",
   "dependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "run-sequence": "^1.2.2"
   },
   "devDependencies": {
     "del": "^2.2.2"
