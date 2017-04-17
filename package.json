@@ -4,7 +4,10 @@
   "author": "Landon Schropp <schroppl@gmail.com>",
   "dependencies": {
     "gulp": "^3.9.1",
-    "run-sequence": "^1.2.2"
+    "rollup": "^0.41.6",
+    "rollup-stream": "^1.19.0",
+    "run-sequence": "^1.2.2",
+    "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
     "del": "^2.2.2"
