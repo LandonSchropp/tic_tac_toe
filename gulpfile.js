@@ -3,7 +3,10 @@
 const gulp = require('gulp');
 const del = require('del');
 
-gulp.task('clean', (callback) => {
-  del(["build"]).then(callback);
+gulp.task('clean', () => {
+  return del(["build"]);
 });
 
+gulp.task('copy', () => {
+  return gulp.src("source/**/*.html").pipe(gulp.dest("build"));
+});
