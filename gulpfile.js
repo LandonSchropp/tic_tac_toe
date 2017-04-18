@@ -17,13 +17,17 @@ gulp.task('clean', () => {
 });
 
 gulp.task('html', () => {
-  return gulp.src("source/**/*.html").pipe(gulp.dest("build"));
+  return gulp
+    .src("source/**/*.html")
+    .pipe(gulp.dest("build"))
+    .pipe(connect.reload());
 });
 
 gulp.task('images', () => {
   return gulp
     .src('source/images/**')
-    .pipe(gulp.dest('build/images'));
+    .pipe(gulp.dest('build/images'))
+    .pipe(connect.reload());
 });
 
 gulp.task('stylesheets', () => {
@@ -31,13 +35,15 @@ gulp.task('stylesheets', () => {
     .src('source/stylesheets/index.sass')
     .pipe(sassGlob())
     .pipe(sass())
-    .pipe(gulp.dest('build/stylesheets'));
+    .pipe(gulp.dest('build/stylesheets'))
+    .pipe(connect.reload());
 });
 
 gulp.task('javascripts', () => {
   return rollup(rollupConfig)
     .pipe(source('index.js'))
-    .pipe(gulp.dest('build/javascripts'));
+    .pipe(gulp.dest('build/javascripts'))
+    .pipe(connect.reload());
 });
 
 gulp.task('build', (callback) => {
@@ -54,8 +60,8 @@ gulp.task('watch', ["build"], () => {
   // Kick off the watchers
   watch("source/images/**", run('images'));
   watch("source/**/*.html", run('html'));
-  watch("source/javascripts/**/*.js", run('javascripts'));
-  watch("source/stylesheets/**/*.sass", run('stylesheets'));
+  watch("source/javascripts/**", run('javascripts'));
+  watch("source/stylesheets/**", run('stylesheets'));
 
   // Start the server
   connect.server({ root: "build", livereload: true });
