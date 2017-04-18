@@ -10,6 +10,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
-    "del": "^2.2.2"
+    "del": "^2.2.2",
+    "eslint": "^3.19.0"
   }
 }
