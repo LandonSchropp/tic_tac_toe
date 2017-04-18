@@ -20,8 +20,10 @@ gulp.task('html', () => {
   return gulp.src("source/**/*.html").pipe(gulp.dest("build"));
 });
 
-gulp.task('build', (callback) => {
-  runSequence('clean', 'html', 'stylesheets', 'javascripts', callback);
+gulp.task('images', () => {
+  return gulp
+    .src('source/images/**')
+    .pipe(gulp.dest('build/images'));
 });
 
 gulp.task('stylesheets', () => {
@@ -36,6 +38,10 @@ gulp.task('javascripts', () => {
   return rollup(rollupConfig)
     .pipe(source('index.js'))
     .pipe(gulp.dest('build/javascripts'));
+});
+
+gulp.task('build', (callback) => {
+  runSequence('clean', 'html', 'images', 'stylesheets', 'javascripts', callback);
 });
 
 gulp.task('watch', ["build"], () => {
