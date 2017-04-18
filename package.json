@@ -4,6 +4,8 @@
   "author": "Landon Schropp <schroppl@gmail.com>",
   "dependencies": {
     "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sass-glob": "^1.0.8",
     "rollup": "^0.41.6",
     "rollup-stream": "^1.19.0",
     "run-sequence": "^1.2.2",
