@@ -13,5 +13,8 @@ module.exports = {
     mocha: true,
     node: true,
     es6: true
+  },
+  globals: {
+    Phaser: true
   }
 };
