@@ -27,4 +27,14 @@ export default class Board {
     if (index < 0 || index >= this.size * this.size) { return; }
     this._values[index] = value;
   }
+
+  // Returns an array containing the coordinates of all of the spaces on the board.
+  spaces() {
+    return _.range(this.size * this.size).map(index => toCoordinates(index, this.size));
+  }
+
+  // Returns an array of row/column pairs representing the empty spaces on the board.
+  emptySpaces() {
+    return this.spaces().filter(coordinates => _.isEmpty(this.get(...coordinates)));
+  }
 }

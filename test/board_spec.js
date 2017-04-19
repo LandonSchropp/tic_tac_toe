@@ -66,5 +66,44 @@ describe("board", () => {
         }
       });
     });
-  })
+  });
+
+  describe("#spaces", () => {
+
+    it("returns all of the spaces", () => {
+      let spaces = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]];
+      expect(board.spaces()).to.eql(spaces);
+    });
+  });
+
+  describe("#emptySpaces", () => {
+
+    context("all of the spaces are empty", () => {
+
+      it("returns all of the spaces", () => {
+        expect(board.emptySpaces()).to.eql(board.spaces());
+      });
+    });
+
+    context("when some of the spaces are empty", () => {
+      beforeEach(() => {
+        board
+          .spaces()
+          .filter(([row, column]) => row + column !== 2)
+          .forEach(([row, column]) => board.set(row, column, "x"))
+      });
+
+      it("returns the empty spaces", () => {
+        expect(board.emptySpaces()).to.eql([[0, 2], [1, 1], [2, 0]]);
+      });
+    });
+
+    context("when none of the spaces are empty", () => {
+      beforeEach(() => board.spaces().forEach(([row, column]) => board.set(row, column, "x")));
+
+      it("returns an empty line", () => {
+        expect(board.emptySpaces()).to.eql([]);
+      });
+    });
+  });
 });
