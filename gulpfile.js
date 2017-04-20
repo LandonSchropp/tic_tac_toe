@@ -3,6 +3,7 @@
 const connect = require('gulp-connect');
 const del = require('del');
 const gulp = require('gulp');
+const gutil = require('gulp-util')
 const rollup = require('rollup-stream');
 const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
@@ -11,6 +12,11 @@ const source = require('vinyl-source-stream');
 const watch = require('gulp-watch');
 
 const rollupConfig = require('./rollup.config');
+
+function handleError(error) {
+  gutil.log(gutil.colors.red(error.stack));
+  this.emit('end');
+}
 
 gulp.task('clean', () => {
   return del(["build"]);
@@ -41,6 +47,7 @@ gulp.task('stylesheets', () => {
 
 gulp.task('javascripts', () => {
   return rollup(rollupConfig)
+    .on('error', handleError)
     .pipe(source('index.js'))
     .pipe(gulp.dest('build/javascripts'))
     .pipe(connect.reload());

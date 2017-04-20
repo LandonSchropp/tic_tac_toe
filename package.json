@@ -9,6 +9,7 @@
     "gulp-connect": "^5.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-sass-glob": "^1.0.8",
+    "gulp-util": "^3.0.8",
     "gulp-watch": "^4.3.11",
     "lodash": "^4.17.4",
     "phaser": "^2.6.2",
