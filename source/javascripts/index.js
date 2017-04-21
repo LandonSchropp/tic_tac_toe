@@ -74,7 +74,9 @@ function nextMove(currentPlayer) {
     // Add the mark to the board
     addMark(row, column, mark);
 
-    // TODO: Recalculate the score
+    // Update the player's score
+    updateScore(mark);
+
     // TODO: Check if the game is over
 
     // Triggler the next move
@@ -89,4 +91,9 @@ function addMark(row, column, mark) {
   let y = boardSprite.height / board.size * row + boardSprite.top;
   let sprite = game.add.sprite(x, y, mark);
   sprite.scale = boardSprite.scale;
+}
+
+function updateScore(mark) {
+  let text = { x: playerScoreText, o: opponentScoreText }[mark];
+  text.text = board.score(mark).toString();
 }

@@ -12,20 +12,20 @@ export default class Board {
 
   constructor(size) {
     this.size = size;
-    this._values = _.times(size * size).map(() => null)
+    this._marks = _.times(size * size).map(() => null)
   }
 
-  // Fetch a value on the board. If the space doesn't contain a value, this returns `null`. If the
+  // Fetch a mark on the board. If the space doesn't contain a mark, this returns `null`. If the
   // row and column are out of bounds, this returns `undefined`.
   get(row, column) {
-    return this._values[toIndex(row, column, this.size)];
+    return this._marks[toIndex(row, column, this.size)];
   }
 
-  // Set a value on the board.
-  set(row, column, value) {
+  // Set a mark on the board.
+  set(row, column, mark) {
     let index = toIndex(row, column, this.size);
     if (index < 0 || index >= this.size * this.size) { return; }
-    this._values[index] = value;
+    this._marks[index] = mark;
   }
 
   // Determine the the space at the provided coordinates is empty.
@@ -41,5 +41,10 @@ export default class Board {
   // Returns an array of row/column pairs representing the empty spaces on the board.
   emptySpaces() {
     return this.spaces().filter(coordinates => _.isEmpty(this.get(...coordinates)));
+  }
+
+  // Returns the score for the given mark.
+  score(mark) {
+    return Math.floor(Math.random() * 1000);
   }
 }
