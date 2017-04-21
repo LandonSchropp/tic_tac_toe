@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import Board from "./board";
-import AIPlayer from "./ai_player";
+import Opponent from "./opponent";
 import Player from "./player";
 
 let board, boardSprite, players;
@@ -38,8 +38,8 @@ function create() {
 
   // Set up the players
   players = [
-    new Player("x", board, boardSprite),
-    new AIPlayer("o", board)
+    new Player(board, boardSprite),
+    new Opponent(board)
   ];
 
   // Kick off the game

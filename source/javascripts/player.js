@@ -1,3 +1,5 @@
+const mark = "x";
+
 export default class Player {
 
   constructor(mark, board, boardSprite) {
@@ -25,7 +27,7 @@ export default class Player {
       this.boardSprite.events.onInputDown.removeAll();
 
       // Make the move
-      callback(row, column, this.mark);
+      callback(row, column, mark);
     });
   }
 }

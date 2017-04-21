@@ -1,6 +1,8 @@
 import _ from "lodash";
 
-export default class AIPlayer {
+const mark = "o";
+
+export default class Opponent {
 
   constructor(mark, board) {
     this.mark = mark;
@@ -10,6 +12,6 @@ export default class AIPlayer {
   move(callback) {
 
     // Pick a random space on the board and make the move
-    callback(..._.sample(this.board.emptySpaces()), this.mark);
+    callback(..._.sample(this.board.emptySpaces()), mark);
   }
 }
