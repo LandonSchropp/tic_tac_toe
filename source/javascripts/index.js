@@ -4,7 +4,7 @@ import Board from "./board";
 import Opponent from "./opponent";
 import Player from "./player";
 
-let board, boardSprite, player, opponent;
+let board, boardSprite, player, opponent, playerScoreText, opponentScoreText;
 
 let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
 
@@ -39,6 +39,27 @@ function create() {
   // Set up the players
   player = new Player(board, boardSprite);
   opponent = new Opponent(board);
+
+  // Set up the scores
+
+  // Add the
+  let scoreStyle = { fontSize: '32px', fill: '#979797' };
+  let textBounds = [ 16, 16, game.world.width - 32, game.world.height - 32 ];
+
+  playerScoreText = game.add.text(0, 0, '0', {
+    ...scoreStyle,
+    boundsAlignH: 'left',
+    boundsAlignV: 'top'
+  });
+
+  opponentScoreText = game.add.text(0, 0, '0', {
+    ...scoreStyle,
+    boundsAlignH: 'right',
+    boundsAlignV: 'bottom'
+  });
+
+  playerScoreText.setTextBounds(...textBounds);
+  opponentScoreText.setTextBounds(...textBounds);
 
   // Kick off the game
   nextMove(player);
