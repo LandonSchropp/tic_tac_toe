@@ -8,4 +8,4 @@ A simple tic-tac-toe variant. The main purpose of this project is to learn the P
 * `gulp build`: Build the project.
 * `gulp watch`: Watch the source files for changes and recompile them.
 * `eslint .`: Run the project's linter.
-* `mocha`: Run the project's tests.
+* `NODE_ENV=test mocha`: Run the project's tests.
