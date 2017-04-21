@@ -4,7 +4,7 @@ import Board from "./board";
 import Opponent from "./opponent";
 import Player from "./player";
 
-let board, boardSprite, players;
+let board, boardSprite, player, opponent;
 
 let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
 
@@ -37,25 +37,18 @@ function create() {
   board = new Board(3);
 
   // Set up the players
-  players = [
-    new Player(board, boardSprite),
-    new Opponent(board)
-  ];
+  player = new Player(board, boardSprite);
+  opponent = new Opponent(board);
 
   // Kick off the game
-  nextMove(players[0]);
-}
-
-// Determines the next player
-function nextPlayer(currentPlayer) {
-  return players[(_.findIndex(players, currentPlayer) + 1) % players.length];
+  nextMove(player);
 }
 
 // Loops the game, letting each player go in sequence
-function nextMove(player) {
+function nextMove(currentPlayer) {
 
   // Kick off the move
-  player.move((row, column, mark) => {
+  currentPlayer.move((row, column, mark) => {
 
     // Add the mark to the board
     addMark(row, column, mark);
@@ -64,7 +57,7 @@ function nextMove(player) {
     // TODO: Check if the game is over
 
     // Triggler the next move
-    nextMove(nextPlayer(player));
+    nextMove(currentPlayer === player ? opponent : player);
   })
 }
 

@@ -4,8 +4,7 @@ const mark = "o";
 
 export default class Opponent {
 
-  constructor(mark, board) {
-    this.mark = mark;
+  constructor(board) {
     this.board = board;
   }
 

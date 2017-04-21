@@ -2,8 +2,7 @@ const mark = "x";
 
 export default class Player {
 
-  constructor(mark, board, boardSprite) {
-    this.mark = mark;
+  constructor(board, boardSprite) {
     this.board = board;
     this.boardSprite = boardSprite;
   }
