@@ -28,6 +28,11 @@ export default class Board {
     this._values[index] = value;
   }
 
+  // Determine the the space at the provided coordinates is empty.
+  isSpaceEmpty(row, column) {
+    return _.isNil(this.get(row, column));
+  }
+
   // Returns an array containing the coordinates of all of the spaces on the board.
   spaces() {
     return _.range(this.size * this.size).map(index => toCoordinates(index, this.size));

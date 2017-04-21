@@ -1,6 +1,11 @@
 import _ from "lodash";
 
+import Board from "./board";
+
+let boardSprite;
+
 let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
+let board = new Board(3);
 
 function preload() {
 
@@ -19,7 +24,7 @@ function preload() {
 function create() {
 
   // Add the board
-  let boardSprite = game.add.sprite(0, 0, 'board3');
+  boardSprite = game.add.sprite(0, 0, 'board3');
   boardSprite.anchor.setTo(0.5, 0.5);
   boardSprite.position = game.world.bounds.size().multiply(0.5, 0.5);
 
@@ -33,8 +38,22 @@ function create() {
 }
 
 function onBoardClick(sprite, pointer) {
-  let { x, y, width, height } = sprite.getBounds();
 
-  let row = Math.floor((pointer.y - y) * 3 / height);
-  let column = Math.floor((pointer.x - x) * 3 / width);
+  // Determine the row and column the user clicked on.
+  let row = Math.floor((pointer.y - sprite.top) * board.size / sprite.height);
+  let column = Math.floor((pointer.x - sprite.left) * board.size / sprite.width);
+
+  // Ignore the click if the space is already occupied
+  if (!board.isSpaceEmpty(row, column)) { return; }
+
+  // Add the mark
+  addMark(row, column, "x");
+}
+
+function addMark(row, column, mark) {
+  board.set(row, column, mark);
+  let x = boardSprite.width / board.size * column + boardSprite.left;
+  let y = boardSprite.height / board.size * row + boardSprite.top;
+  let sprite = game.add.sprite(x, y, mark);
+  sprite.scale = boardSprite.scale;
 }
