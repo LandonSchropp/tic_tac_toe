@@ -1,11 +1,12 @@
 import _ from "lodash";
 
 import Board from "./board";
+import AIPlayer from "./ai_player";
+import Player from "./player";
 
-let boardSprite;
+let board, boardSprite, players;
 
 let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
-let board = new Board(3);
 
 function preload() {
 
@@ -32,24 +33,42 @@ function create() {
   let scale = game.world.bounds.width / boardSprite.width * 0.9;
   boardSprite.scale.setTo(scale, scale);
 
-  // Listen to clicks on the sprite
-  boardSprite.inputEnabled = true;
-  boardSprite.events.onInputDown.add(onBoardClick, this);
+  // Set up the game board
+  board = new Board(3);
+
+  // Set up the players
+  players = [
+    new Player("x", board, boardSprite),
+    new AIPlayer("o", board)
+  ];
+
+  // Kick off the game
+  nextMove(players[0]);
 }
 
-function onBoardClick(sprite, pointer) {
-
-  // Determine the row and column the user clicked on.
-  let row = Math.floor((pointer.y - sprite.top) * board.size / sprite.height);
-  let column = Math.floor((pointer.x - sprite.left) * board.size / sprite.width);
-
-  // Ignore the click if the space is already occupied
-  if (!board.isSpaceEmpty(row, column)) { return; }
-
-  // Add the mark
-  addMark(row, column, "x");
+// Determines the next player
+function nextPlayer(currentPlayer) {
+  return players[(_.findIndex(players, currentPlayer) + 1) % players.length];
 }
 
+// Loops the game, letting each player go in sequence
+function nextMove(player) {
+
+  // Kick off the move
+  player.move((row, column, mark) => {
+
+    // Add the mark to the board
+    addMark(row, column, mark);
+
+    // TODO: Recalculate the score
+    // TODO: Check if the game is over
+
+    // Triggler the next move
+    nextMove(nextPlayer(player));
+  })
+}
+
+// Add a mark to the board as well as the sprite
 function addMark(row, column, mark) {
   board.set(row, column, mark);
   let x = boardSprite.width / board.size * column + boardSprite.left;
