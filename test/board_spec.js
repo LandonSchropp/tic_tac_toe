@@ -230,4 +230,35 @@ describe("board", () => {
       });
     });
   });
+
+  // describe("#score", () => {
+  //
+  //   context("when the board doesn't contain any marks", () => {
+  //
+  //     it("only returns the sum of for the connections with the same mark", () => {
+  //
+  //     });
+  //   });
+  //
+  //   context("when the board contains a connection", () => {
+  //
+  //     it("only returns the sum of for the connections with the same mark", () => {
+  //
+  //     });
+  //   })
+  //
+  //   context("when the board contains multiple connections", () => {
+  //
+  //     it("only returns the sum of for the connections with the same mark", () => {
+  //
+  //     });
+  //   });
+  //
+  //   context("when the board contains connections for different marks", () => {
+  //
+  //     it("only returns the sum of for the connections with the same mark", () => {
+  //
+  //     });
+  //   });
+  // });
 });

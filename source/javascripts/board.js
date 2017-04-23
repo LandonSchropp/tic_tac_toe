@@ -8,6 +8,10 @@ function toCoordinates(index, size) {
   return [Math.floor(index / size), index % size];
 }
 
+function connectionLength([ [ x1, y1 ], [ x2, y2 ] ]) {
+  return Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2)) + 1;
+}
+
 export default class Board {
 
   constructor(size) {
@@ -100,16 +104,17 @@ export default class Board {
       .compact()
 
       // Filter out connections that are too short
-      .filter(([ [ x1, y1 ], [ x2, y2 ] ]) => {
-        return Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2)) + 1 >= minimumConnectionLength;
-      })
+      .filter((connection) => connectionLength(connection) >= minimumConnectionLength)
 
       // Extract the value
       .value();
   }
 
-  // Returns the score for the given mark.
+  // Returns the score for the given mark (using an arithmetic sum).
   score(mark) {
-    return Math.floor(Math.random() * 1000);
+    return _(this.connections(mark))
+      .map((connection) => connectionLength(connection))
+      .map((length) => (length - 2) * (1+ length - 2) / 2)
+      .reduce(_.add, 0);
   }
 }
