@@ -76,6 +76,8 @@ describe("board", () => {
     });
   });
 
+  // TODO: These tests are currently dependent on the order the algorithm outputs the points in.
+  // They should be rewritten to not rely on a specific implementation.
   describe("#emptySpaces", () => {
 
     context("all of the spaces are empty", () => {
@@ -103,6 +105,128 @@ describe("board", () => {
 
       it("returns an empty line", () => {
         expect(board.emptySpaces()).to.eql([]);
+      });
+    });
+  });
+
+  describe("#connections", () => {
+    beforeEach(() => board = new Board(5));
+
+    context("when the board does not contain any connections", () => {
+
+      it("returns an empty array", () => {
+
+        it("returns the connection", () => {
+          expect(board.connections("x")).to.eql([]);
+        });
+      });
+    });
+
+    context("when the board contains elements less than the minimum connection length", () => {
+
+    });
+
+    context("when the board contains a horizontal connection", () => {
+      beforeEach(() => {
+        board.set(0, 0, "x");
+        board.set(0, 1, "x");
+        board.set(0, 2, "x");
+      });
+
+      it("returns the connection", () => {
+        expect(board.connections("x")).to.eql([ [ [0, 0], [0, 2] ] ]);
+      });
+    });
+
+    context("when the board contains a vertical connection", () => {
+      beforeEach(() => {
+        board.set(2, 4, "x");
+        board.set(3, 4, "x");
+        board.set(4, 4, "x");
+      });
+
+      it("returns the connection", () => {
+        expect(board.connections("x")).to.eql([ [ [2, 4], [4, 4] ] ]);
+      });
+    });
+
+    context("when the board contains a diagonal connection", () => {
+      beforeEach(() => {
+        board.set(2, 2, "x");
+        board.set(3, 3, "x");
+        board.set(4, 4, "x");
+      });
+
+      it("returns the connection", () => {
+        expect(board.connections("x")).to.eql([ [ [2, 2], [4, 4] ] ]);
+      });
+    });
+
+    context("when the board contains a reversedDiagonal connection", () => {
+      beforeEach(() => {
+        board.set(4, 0, "x");
+        board.set(3, 1, "x");
+        board.set(2, 2, "x");
+      });
+
+      it("returns the connection", () => {
+        expect(board.connections("x")).to.eql([ [ [2, 2], [4, 0] ] ]);
+      });
+    });
+
+    context("when the board contains a long connection", () => {
+      beforeEach(() => {
+        board.set(4, 0, "x");
+        board.set(3, 1, "x");
+        board.set(2, 2, "x");
+        board.set(1, 3, "x");
+        board.set(0, 4, "x");
+      });
+
+      it("returns the full connection", () => {
+        expect(board.connections("x")).to.eql([ [ [0, 4], [4, 0] ] ]);
+      });
+    });
+
+    context("when the board contains multiple mark connections", () => {
+      beforeEach(() => {
+        board.set(0, 0, "x");
+        board.set(0, 1, "x");
+        board.set(0, 2, "x");
+        board.set(1, 0, "o");
+        board.set(1, 1, "o");
+        board.set(1, 2, "o");
+      });
+
+      it("only returns the connections for the mark", () => {
+        expect(board.connections("x")).to.eql([ [ [0, 0], [0, 2] ] ]);
+      });
+    });
+
+    context("when the board contains multiple connections for the mark", () => {
+      beforeEach(() => {
+        board.set(0, 0, "x");
+        board.set(0, 1, "x");
+        board.set(0, 2, "x");
+        board.set(1, 0, "x");
+        board.set(1, 1, "x");
+        board.set(1, 2, "x");
+        board.set(2, 0, "x");
+        board.set(2, 1, "x");
+        board.set(2, 2, "x");
+      });
+
+      it("returns all of the connections", () => {
+        expect(board.connections("x")).to.eql([
+          [ [0, 0], [0, 2] ],
+          [ [0, 0], [2, 0] ],
+          [ [0, 0], [2, 2] ],
+          [ [0, 1], [2, 1] ],
+          [ [0, 2], [2, 2] ],
+          [ [0, 2], [2, 0] ],
+          [ [1, 0], [1, 2] ],
+          [ [2, 0], [2, 2] ]
+        ]);
       });
     });
   });

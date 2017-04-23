@@ -43,6 +43,71 @@ export default class Board {
     return this.spaces().filter(coordinates => _.isEmpty(this.get(...coordinates)));
   }
 
+  // Returns the connections for the given mark.
+  connections(mark) {
+
+    const minimumConnectionLength = 3;
+
+    function add(c1, c2) {
+      return [ c1[0] + c2[0], c1[1] + c2[1]];
+    }
+
+    // Define the steps
+    const steps = [
+      [0, 1],
+      [1, 0],
+      [1, 1],
+      [1, -1]
+    ];
+
+    // Create a set of arrays to mark the traversals
+    let traversals = _.fromPairs(steps.map((step, stepNumber) => [stepNumber, []]));
+
+    return _(this.spaces())
+
+      // Map each space into its possible connections
+      .map((start) => {
+
+        // Map over all of the possible steps
+        return steps.map((step, stepNumber) => {
+
+          // Ignore the space if it does not contain the mark
+          if (this.get(...start) !== mark) { return; }
+
+          // Ignore the space if it has already been traversed
+          if (traversals[stepNumber][toIndex(...start, this.size)]) { return; }
+
+          // Mark the current space as traversed
+          traversals[stepNumber][toIndex(...start, this.size)] = true;
+
+          // Find the end of the connection
+          let end = start;
+
+          while (this.get(...add(end, step)) === mark) {
+            end = add(end, step);
+            traversals[stepNumber][toIndex(...end, this.size)] = true;
+          }
+
+          // Return the connection
+          return [ start, end ];
+        });
+      })
+
+      // Flatten out the steps
+      .flatten()
+
+      // Filter out spaces without connections
+      .compact()
+
+      // Filter out connections that are too short
+      .filter(([ [ x1, y1 ], [ x2, y2 ] ]) => {
+        return Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2)) + 1 >= minimumConnectionLength;
+      })
+
+      // Extract the value
+      .value();
+  }
+
   // Returns the score for the given mark.
   score(mark) {
     return Math.floor(Math.random() * 1000);
