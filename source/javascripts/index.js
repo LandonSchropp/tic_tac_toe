@@ -24,17 +24,17 @@ function preload() {
 
 function create() {
 
-  // Add the board
-  boardSprite = game.add.sprite(0, 0, 'board3');
+  // Set up the game board
+  board = new Board(5);
+
+  // Add the board sprite
+  boardSprite = game.add.sprite(0, 0, `board${ board.size }`);
   boardSprite.anchor.setTo(0.5, 0.5);
   boardSprite.position.setTo(game.world.centerX, game.world.centerY);
 
   // Scale the board so it properly fits in the canvas
   let scale = game.world.bounds.width / boardSprite.width * 0.9;
   boardSprite.scale.setTo(scale, scale);
-
-  // Set up the game board
-  board = new Board(3);
 
   // Set up the players
   player = new Player(board, boardSprite);
