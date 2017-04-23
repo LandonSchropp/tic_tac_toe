@@ -1,10 +1,12 @@
 import _ from "lodash";
 
 function toIndex(row, column, size) {
+  if (row < 0 || row >= size || column < 0 || column >= size) { return -1; }
   return row * size + column;
 }
 
 function toCoordinates(index, size) {
+  if (index < 0 || index >= size * size) { return -1; }
   return [Math.floor(index / size), index % size];
 }
 
