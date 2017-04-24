@@ -37,7 +37,7 @@ function create() {
   boardSprite.scale.setTo(scale, scale);
 
   // Set up the players
-  player = new Player(board, boardSprite);
+  player = new Player(board, boardSprite, "x");
   opponent = new Opponent(board);
 
   // Set up the scores

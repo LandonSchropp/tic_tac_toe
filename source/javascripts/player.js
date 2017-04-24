@@ -1,10 +1,9 @@
-const mark = "x";
-
 export default class Player {
 
-  constructor(board, boardSprite) {
+  constructor(board, boardSprite, mark) {
     this.board = board;
     this.boardSprite = boardSprite;
+    this.mark = mark;
   }
 
   // Starts a move. In the case of a player, this means attaching a listener to the sprite for a
@@ -26,7 +25,7 @@ export default class Player {
       this.boardSprite.events.onInputDown.removeAll();
 
       // Make the move
-      callback(row, column, mark);
+      callback(row, column, this.mark);
     });
   }
 }
