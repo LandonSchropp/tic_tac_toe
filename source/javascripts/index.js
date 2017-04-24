@@ -71,26 +71,39 @@ function nextMove(currentPlayer) {
   // Kick off the move
   currentPlayer.move((row, column, mark) => {
 
-    // Add the mark to the board
-    addMark(row, column, mark);
-
     // Update the player's score
     updateScore(mark);
 
-    // TODO: Check if the game is over
+    // Add the mark to the board
+    addMark(row, column, mark, () => {
 
-    // Triggler the next move
-    nextMove(currentPlayer === player ? opponent : player);
+      // TODO: Check if the game is over
+
+      // Triggler the next move
+      nextMove(currentPlayer === player ? opponent : player);
+    });
   })
 }
 
 // Add a mark to the board as well as the sprite
-function addMark(row, column, mark) {
+function addMark(row, column, mark, callback) {
+
+  // Add the sprite to the board
   board.set(row, column, mark);
-  let x = boardSprite.width / board.size * column + boardSprite.left;
-  let y = boardSprite.height / board.size * row + boardSprite.top;
+  let x = boardSprite.width / board.size * (column + 0.5) + boardSprite.left;
+  let y = boardSprite.height / board.size * (row + 0.5) + boardSprite.top;
+
   let sprite = game.add.sprite(x, y, mark);
-  sprite.scale = boardSprite.scale;
+  sprite.scale.set(0);
+  sprite.anchor.set(0.5);
+
+  // Tween the sprite
+  // TODO: Combine the callbacks
+  let tween = game.add.tween(sprite).to({ angle: 180 }, 300, Phaser.Easing.Cubic.InOut, true);
+  game.add.tween(sprite.scale).to(boardSprite.scale, 300, Phaser.Easing.Cubic.InOut, true);
+
+  // Trigger the callback when the animation is complete
+  tween.onComplete.add(callback);
 }
 
 function updateScore(mark) {
