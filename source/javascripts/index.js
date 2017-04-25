@@ -1,4 +1,5 @@
 import _ from "lodash";
+import async from "async";
 
 import Board from "./board";
 import Opponent from "./opponent";
@@ -71,9 +72,6 @@ function nextMove(currentPlayer) {
   // Kick off the move
   currentPlayer.move((row, column, mark) => {
 
-    // Update the player's score
-    updateScore(mark);
-
     // Add the mark to the board
     addMark(row, column, mark, () => {
 
@@ -88,22 +86,36 @@ function nextMove(currentPlayer) {
 // Add a mark to the board as well as the sprite
 function addMark(row, column, mark, callback) {
 
-  // Add the sprite to the board
+  // Update the board and the score
   board.set(row, column, mark);
+  updateScore(mark);
+
+  // Add the sprite
   let x = boardSprite.width / board.size * (column + 0.5) + boardSprite.left;
   let y = boardSprite.height / board.size * (row + 0.5) + boardSprite.top;
 
   let sprite = game.add.sprite(x, y, mark);
-  sprite.scale.set(0);
+
   sprite.anchor.set(0.5);
+  sprite.scale.set(0);
 
   // Tween the sprite
   // TODO: Combine the callbacks
-  let tween = game.add.tween(sprite).to({ angle: 180 }, 300, Phaser.Easing.Cubic.InOut, true);
-  game.add.tween(sprite.scale).to(boardSprite.scale, 300, Phaser.Easing.Cubic.InOut, true);
 
-  // Trigger the callback when the animation is complete
-  tween.onComplete.add(callback);
+  async.parallel([
+    (next) => {
+      game.add.tween(sprite)
+        .to({ angle: 180 }, 300, Phaser.Easing.Cubic.InOut, true)
+        .onComplete.add(next);
+    },
+
+    (next) => {
+      game.add.tween(sprite.scale)
+        .to(boardSprite.scale, 300, Phaser.Easing.Cubic.InOut, true)
+        .onComplete.add(next);
+    }
+  ], callback);
+
 }
 
 function updateScore(mark) {

@@ -3,6 +3,7 @@
   "description": "A simple tic-tac-toe game",
   "author": "Landon Schropp <schroppl@gmail.com>",
   "dependencies": {
+    "async": "^2.3.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "gulp": "^3.9.1",
