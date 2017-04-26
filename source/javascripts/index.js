@@ -55,6 +55,7 @@ function nextMove(currentPlayer) {
     addMark(row, column, currentPlayer.mark).then(() => {
 
       // TODO: Check if the game is over
+      if (board.isGameOver()) { return; }
 
       // Triggler the next move
       nextMove(currentPlayer === player ? opponent : player);

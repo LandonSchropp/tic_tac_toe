@@ -3,7 +3,7 @@ import { expect } from "chai";
 
 import Board from "../source/javascripts/board";
 
-describe("board", () => {
+describe("Board", () => {
   let board;
 
   beforeEach(() => board = new Board());
@@ -93,6 +93,116 @@ describe("board", () => {
 
       it("returns an empty line", () => {
         expect(board.emptySpaces()).to.eql([]);
+      });
+    });
+  });
+
+  describe("#winner", () => {
+
+    context("when the board is empty", () => {
+
+      it("returns null", () => {
+        expect(board.winner()).to.equal(null);
+      });
+    });
+
+    context("when no player has won", () => {
+      beforeEach(() => {
+        board.set(1, 0, "x");
+        board.set(1, 1, "o");
+        board.set(1, 2, "x");
+      });
+
+      it("returns null", () => {
+        expect(board.winner()).to.equal(null);
+      });
+    });
+
+    context("when the player has a horizontal win", () => {
+      beforeEach(() => {
+        board.set(1, 0, "x");
+        board.set(1, 1, "x");
+        board.set(1, 2, "x");
+      });
+
+      it("returns the player's mark", () => {
+        expect(board.winner()).to.equal("x");
+      });
+    });
+
+    context("when the player has a vertical win", () => {
+      beforeEach(() => {
+        board.set(0, 0, "o");
+        board.set(1, 0, "o");
+        board.set(2, 0, "o");
+      });
+
+      it("returns the player's mark", () => {
+        expect(board.winner()).to.equal("o");
+      });
+    });
+
+    context("when the player has a diagonal win", () => {
+      beforeEach(() => {
+        board.set(0, 0, "x");
+        board.set(1, 1, "x");
+        board.set(2, 2, "x");
+      });
+
+      it("returns the player's mark", () => {
+        expect(board.winner()).to.equal("x");
+      });
+    });
+
+    context("when the player has a reverse diagonal win", () => {
+      beforeEach(() => {
+        board.set(0, 2, "o");
+        board.set(1, 1, "o");
+        board.set(2, 0, "o");
+      });
+
+      it("returns the player's mark", () => {
+        expect(board.winner()).to.equal("o");
+      });
+    });
+  });
+
+  describe("#isGameOver", () => {
+
+    context("when a player has won", () => {
+      beforeEach(() => {
+        board.set(0, 0, "o");
+        board.set(0, 1, "o");
+        board.set(0, 2, "o");
+      });
+
+      it("returns true", () => {
+        expect(board.isGameOver()).to.equal(true);
+      });
+    });
+
+    context("when all of the spaces are filled", () => {
+      beforeEach(() => {
+        board.set(0, 0, "x");
+        board.set(0, 1, "o");
+        board.set(0, 2, "x");
+        board.set(1, 0, "x");
+        board.set(1, 1, "o");
+        board.set(1, 2, "x");
+        board.set(2, 0, "o");
+        board.set(2, 1, "x");
+        board.set(2, 2, "o");
+      });
+
+      it("returns false", () => {
+        expect(board.isGameOver()).to.equal(true);
+      });
+    });
+
+    context("when the the board has empty spaces and a player hasn't won", () => {
+
+      it("returns false", () => {
+        expect(board.isGameOver()).to.equal(false);
       });
     });
   });

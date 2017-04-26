@@ -57,4 +57,19 @@ export default class Board {
   emptySpaces() {
     return this.spaces().filter(coordinates => this.isSpaceEmpty(...coordinates));
   }
+
+  // Returns the winner. If no player has won, this method returns null.
+  winner() {
+    return _(matches)
+      .map((indices) => indices.map(index => this._marks[index]))
+      .filter(marks => _.uniq(marks).length === 1)
+      .map(_.first)
+      .filter(_.negate(_.isNil))
+      .get(0, null);
+  }
+
+  // Returns true if the game has ended.
+  isGameOver() {
+    return !_.isNil(this.winner()) || this.emptySpaces().length === 0;
+  }
 }
