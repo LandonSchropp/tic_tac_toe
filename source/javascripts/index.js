@@ -6,6 +6,8 @@ import Opponent from "./opponent";
 import Player from "./player";
 import colors from "./colors";
 
+import { appearTween } from './tweens';
+
 let palette = _.last(colors);
 
 let board, boardSprite, player, opponent, playerScoreText, opponentScoreText;
@@ -48,10 +50,10 @@ function create() {
 function nextMove(currentPlayer) {
 
   // Kick off the move
-  currentPlayer.move((row, column, mark) => {
+  currentPlayer.move().then(([ row, column ]) => {
 
     // Add the mark to the board
-    addMark(row, column, mark, () => {
+    addMark(row, column, currentPlayer.mark).then(() => {
 
       // TODO: Check if the game is over
 
@@ -62,7 +64,7 @@ function nextMove(currentPlayer) {
 }
 
 // Add a mark to the board as well as the sprite
-function addMark(row, column, mark, callback) {
+function addMark(row, column, mark) {
 
   // Update the board
   board.set(row, column, mark);
@@ -73,22 +75,10 @@ function addMark(row, column, mark, callback) {
 
   let sprite = game.add.sprite(x, y, mark);
 
+  sprite.scale = boardSprite.scale.clone();
   sprite.anchor.set(0.5);
-  sprite.scale.set(0);
   sprite.tint = palette[mark === 'x' ? 'player' : 'opponent'];
 
   // Tween the sprite
-  async.parallel([
-    (next) => {
-      game.add.tween(sprite)
-        .to({ angle: 180 }, 300, Phaser.Easing.Cubic.InOut, true)
-        .onComplete.add(next);
-    },
-
-    (next) => {
-      game.add.tween(sprite.scale)
-        .to(boardSprite.scale, 300, Phaser.Easing.Cubic.InOut, true)
-        .onComplete.add(next);
-    }
-  ], callback);
+  return appearTween(game, sprite);
 }
