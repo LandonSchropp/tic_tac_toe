@@ -97,6 +97,28 @@ describe("Board", () => {
     });
   });
 
+  describe("#winnerCoordinates", () => {
+
+    context("when a player has won", () => {
+      beforeEach(() => {
+        board.set(1, 0, "x");
+        board.set(1, 1, "x");
+        board.set(1, 2, "x");
+      });
+
+      it("returns null", () => {
+        expect(board.winnerCoordinates()).to.eql([ [ 1, 0 ], [ 1, 1 ], [ 1, 2 ] ]);
+      });
+    });
+
+    context("when a player has not won", () => {
+
+      it("returns null", () => {
+        expect(board.winnerCoordinates()).to.equal(null);
+      });
+    });
+  });
+
   describe("#winner", () => {
 
     context("when the board is empty", () => {

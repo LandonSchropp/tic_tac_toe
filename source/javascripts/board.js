@@ -11,7 +11,7 @@ const matches = [
   [2, 5, 8],
   [0, 4, 8],
   [2, 4, 6]
-];
+].map(match => match.map(toCoordinates));
 
 function toIndex(row, column) {
   if (row < 0 || row >= size || column < 0 || column >= size) { return -1; }
@@ -21,6 +21,10 @@ function toIndex(row, column) {
 function toCoordinates(index) {
   if (index < 0 || index >= size * size) { return -1; }
   return [Math.floor(index / size), index % size];
+}
+
+function allEqualAndNotNil(array) {
+  return _.uniq(array).length === 1 && !_.isNil(array[0]);
 }
 
 export default class Board {
@@ -58,14 +62,18 @@ export default class Board {
     return this.spaces().filter(coordinates => this.isSpaceEmpty(...coordinates));
   }
 
+  // Returns the coordinates of the winning marks in the game. If there is no winner, this method
+  // returns null.
+  winnerCoordinates() {
+    return _(matches)
+      .filter((match) => allEqualAndNotNil(match.map(coordinates => this.get(...coordinates))))
+      .get(0, null);
+  }
+
   // Returns the winner. If no player has won, this method returns null.
   winner() {
-    return _(matches)
-      .map((indices) => indices.map(index => this._marks[index]))
-      .filter(marks => _.uniq(marks).length === 1)
-      .map(_.first)
-      .filter(_.negate(_.isNil))
-      .get(0, null);
+    let coordinates = _.first(this.winnerCoordinates());
+    return _.isNil(coordinates) ? null : this.get(...coordinates);
   }
 
   // Returns true if the game has ended.
