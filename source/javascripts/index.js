@@ -1,5 +1,4 @@
 import _ from "lodash";
-import async from "async";
 
 import Board from "./board";
 import Opponent from "./opponent";
@@ -10,7 +9,7 @@ import { appearTween } from './tweens';
 
 let palette = _.last(colors);
 
-let board, boardSprite, player, opponent, playerScoreText, opponentScoreText;
+let board, boardSprite, player, opponent;
 
 let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
 
