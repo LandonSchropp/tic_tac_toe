@@ -110,5 +110,5 @@ function gameOver() {
   let winnerSprites = mapCoordinatesToSprites(winnerCoordinates);
   let loserSprites = mapCoordinatesToSprites(loserCoordinates);
 
-  gameOverTween(winnerSprites, loserSprites).then(reset);
+  gameOverTween(game, winnerSprites, loserSprites, palette).then(reset);
 }
