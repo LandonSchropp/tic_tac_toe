@@ -9,7 +9,7 @@ import { appearTween } from './tweens';
 
 let palette = _.last(colors);
 
-let board, boardSprite, player, opponent;
+let board, boardSprite, player, opponent, markSprites;
 
 let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
 
@@ -24,9 +24,6 @@ function create() {
   // Set the game background color
   game.stage.backgroundColor = palette.background;
 
-  // Set up the game board
-  board = new Board();
-
   // Add the board sprite
   boardSprite = game.add.sprite(0, 0, 'board');
   boardSprite.anchor.setTo(0.5, 0.5);
@@ -37,9 +34,19 @@ function create() {
   let scale = game.world.bounds.width / boardSprite.width * 0.9;
   boardSprite.scale.set(scale);
 
-  // Set up the players
+  // Kick off the game
+  reset();
+}
+
+function reset() {
+
+  // Set up the game logic objects
+  board = new Board();
   player = new Player(board, boardSprite, "x");
   opponent = new Opponent(board);
+
+  // Set up the container for the marks
+  markSprites = _.times(board.size, () => []);
 
   // Kick off the game
   nextMove(player);
@@ -55,7 +62,7 @@ function nextMove(currentPlayer) {
     addMark(row, column, currentPlayer.mark).then(() => {
 
       // TODO: Check if the game is over
-      if (board.isGameOver()) { return; }
+      if (board.isGameOver()) { return gameOver(); }
 
       // Triggler the next move
       nextMove(currentPlayer === player ? opponent : player);
@@ -74,6 +81,7 @@ function addMark(row, column, mark) {
   let y = boardSprite.height / board.size * (row + 0.5) + boardSprite.top;
 
   let sprite = game.add.sprite(x, y, mark);
+  markSprites[row][column] = sprite;
 
   sprite.scale = boardSprite.scale.clone();
   sprite.anchor.set(0.5);
@@ -81,4 +89,24 @@ function addMark(row, column, mark) {
 
   // Tween the sprite
   return appearTween(game, sprite);
+}
+
+// Called when the game has ended.
+function gameOver() {
+
+  let winnerCoordinates = board.winnerCoordinates();
+
+  let loserCoordinates = board.spaces().filter(coordinates => {
+    return !_.some(winnerCoordinates, coordinates);
+  });
+
+  function mapCoordinatesToSprites(coordinates) {
+    return _( coordinates )
+      .map(([ row, column ]) => markSprites[row][column])
+      .compact()
+      .value();
+  }
+
+  let winnerSprites = mapCoordinatesToSprites(winnerCoordinates);
+  let loserSprites = mapCoordinatesToSprites(loserCoordinates);
 }
