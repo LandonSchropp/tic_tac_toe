@@ -4,6 +4,9 @@ import async from "async";
 import Board from "./board";
 import Opponent from "./opponent";
 import Player from "./player";
+import colors from "./colors";
+
+let palette = _.last(colors);
 
 let board, boardSprite, player, opponent, playerScoreText, opponentScoreText;
 
@@ -25,6 +28,9 @@ function preload() {
 
 function create() {
 
+  // Set the game background color
+  game.stage.backgroundColor = palette.background;
+
   // Set up the game board
   board = new Board(5);
 
@@ -32,6 +38,7 @@ function create() {
   boardSprite = game.add.sprite(0, 0, `board${ board.size }`);
   boardSprite.anchor.setTo(0.5, 0.5);
   boardSprite.position.setTo(game.world.centerX, game.world.centerY);
+  boardSprite.tint = palette.board;
 
   // Scale the board so it properly fits in the canvas
   let scale = game.world.bounds.width / boardSprite.width * 0.9;
@@ -98,6 +105,7 @@ function addMark(row, column, mark, callback) {
 
   sprite.anchor.set(0.5);
   sprite.scale.set(0);
+  sprite.tint = palette[mark === 'x' ? 'player' : 'opponent'];
 
   // Tween the sprite
   // TODO: Combine the callbacks
@@ -120,5 +128,6 @@ function addMark(row, column, mark, callback) {
 
 function updateScore(mark) {
   let text = { x: playerScoreText, o: opponentScoreText }[mark];
+  text.addColor(`#${ colors.player }`, 0);
   text.text = board.score(mark).toString();
 }
