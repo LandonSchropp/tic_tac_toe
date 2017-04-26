@@ -1,1 +1,3 @@
-NODE_ENV=test mocha --compilers js:babel-register
+#!/usr/bin/env bash
+
+NODE_ENV=test mocha --compilers js:babel-register spec
