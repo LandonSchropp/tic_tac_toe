@@ -18,3 +18,16 @@ export function appearTween(game, sprite) {
 
   return Promise.all([ growPromise, rotatePromise ]);
 }
+
+export function gameOverTween(winnerSprites, loserSprites) {
+
+  return new Promise(resolve => {
+
+    loserSprites.forEach(sprite => sprite.kill());
+
+    setTimeout(() => {
+      winnerSprites.forEach(sprite => sprite.kill());
+      resolve();
+    }, 2000);
+  });
+}

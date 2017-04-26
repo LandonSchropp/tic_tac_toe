@@ -5,7 +5,7 @@ import Opponent from "./opponent";
 import Player from "./player";
 import colors from "./colors";
 
-import { appearTween } from './tweens';
+import { appearTween, gameOverTween } from './tweens';
 
 let palette = _.last(colors);
 
@@ -97,7 +97,7 @@ function gameOver() {
   let winnerCoordinates = board.winnerCoordinates();
 
   let loserCoordinates = board.spaces().filter(coordinates => {
-    return !_.some(winnerCoordinates, coordinates);
+    return !_.some(winnerCoordinates, _.partial(_.isEqual, coordinates));
   });
 
   function mapCoordinatesToSprites(coordinates) {
@@ -109,4 +109,6 @@ function gameOver() {
 
   let winnerSprites = mapCoordinatesToSprites(winnerCoordinates);
   let loserSprites = mapCoordinatesToSprites(loserCoordinates);
+
+  gameOverTween(winnerSprites, loserSprites).then(reset);
 }
