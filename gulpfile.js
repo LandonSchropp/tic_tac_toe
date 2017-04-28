@@ -1,8 +1,8 @@
 'use strict';
 
+const FileCache = require("gulp-file-cache");
 const connect = require('gulp-connect');
 const del = require('del');
-const file = require('gulp-file');
 const gulp = require('gulp');
 const gutil = require('gulp-util')
 const rollup = require('rollup-stream');
@@ -10,10 +10,10 @@ const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
 const sassGlob = require('gulp-sass-glob');
 const source = require('vinyl-source-stream');
+const transform = require('gulp-transform');
 const watch = require('gulp-watch');
 
 const fetchColors = require('./source/javascripts/lib/fetch_colors');
-const colorConfig = require('./source/config/colors');
 const rollupConfig = require('./rollup.config');
 
 function handleError(error) {
@@ -26,11 +26,17 @@ gulp.task('clean', () => {
 });
 
 gulp.task('colors', () => {
+  let fileCache = new FileCache("temp/color_file_cache");
 
-  return fetchColors(colorConfig).then((colors) => {
-    let json = JSON.stringify(colors, null, 2);
-    return file("colors.json", json).pipe(gulp.dest("temp"));
-  });
+  gulp
+    .src("source/config/colors.json")
+    .pipe(fileCache.filter())
+    .pipe(transform(colors => {
+      return fetchColors(JSON.parse(colors))
+        .then(colors => JSON.stringify(colors, null, 2));
+    }))
+    .pipe(fileCache.cache())
+    .pipe(gulp.dest("temp"));
 });
 
 gulp.task('html', () => {

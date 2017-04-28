@@ -1370,6 +1370,10 @@ es6-map@^0.1.3:
     es6-symbol "~3.1.1"
     event-emitter "~0.3.5"
 
+es6-promise@^4.0.5:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.1.0.tgz#dda03ca8f9f89bc597e689842929de7ba8cebdf0"
+
 es6-set@~0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/es6-set/-/es6-set-0.1.5.tgz#d2b3ec5d4d800ced818db538d28974db0a73ccb1"
@@ -1967,12 +1971,12 @@ gulp-connect@^5.0.0:
     gulp-util "^3.0.6"
     tiny-lr "^0.2.1"
 
-gulp-file@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/gulp-file/-/gulp-file-0.3.0.tgz#e8c4d763f126fb3332fc416e3d1ef46ed67d8d0d"
+gulp-file-cache@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/gulp-file-cache/-/gulp-file-cache-0.0.1.tgz#fdae0826e3bcffc67dd2e387c7759787f65a9786"
   dependencies:
-    gulp-util "^2.2.14"
-    through2 "^0.4.1"
+    gulp-util "2.x"
+    through2 "0.x"
 
 gulp-sass-glob@^1.0.8:
   version "1.0.8"
@@ -1992,6 +1996,14 @@ gulp-sass@^3.1.0:
     node-sass "^4.2.0"
     through2 "^2.0.0"
     vinyl-sourcemaps-apply "^0.2.0"
+
+gulp-transform@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/gulp-transform/-/gulp-transform-1.1.0.tgz#6e28fdb78756b315df4f08925c58e5379d3bdd02"
+  dependencies:
+    es6-promise "^4.0.5"
+    gulp-util "^3.0.7"
+    lodash "^4.13.1"
 
 gulp-util@*, gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.6, gulp-util@^3.0.7, gulp-util@^3.0.8:
   version "3.0.8"
@@ -2016,7 +2028,7 @@ gulp-util@*, gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.6, gulp-util@^3.0.
     through2 "^2.0.0"
     vinyl "^0.5.0"
 
-gulp-util@^2.2.14:
+gulp-util@2.x:
   version "2.2.20"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-2.2.20.tgz#d7146e5728910bd8f047a6b0b1e549bc22dbd64c"
   dependencies:
@@ -2804,7 +2816,7 @@ lodash.values@~2.4.1:
   dependencies:
     lodash.keys "~2.4.1"
 
-lodash@^4.0.0, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0:
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4018,7 +4030,7 @@ text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
-through2@^0.4.1:
+through2@0.x:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/through2/-/through2-0.4.2.tgz#dbf5866031151ec8352bb6c4db64a2292a840b9b"
   dependencies:
