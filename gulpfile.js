@@ -82,6 +82,7 @@ gulp.task('watch', ["build"], () => {
   }
 
   // Kick off the watchers
+  watch("source/config/colors.json", run('javascripts'));
   watch("source/images/**", run('images'));
   watch("source/**/*.html", run('html'));
   watch("source/javascripts/**", run('javascripts'));
