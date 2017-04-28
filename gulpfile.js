@@ -2,6 +2,7 @@
 
 const connect = require('gulp-connect');
 const del = require('del');
+const file = require('gulp-file');
 const gulp = require('gulp');
 const gutil = require('gulp-util')
 const rollup = require('rollup-stream');
@@ -11,6 +12,8 @@ const sassGlob = require('gulp-sass-glob');
 const source = require('vinyl-source-stream');
 const watch = require('gulp-watch');
 
+const fetchColors = require('./source/javascripts/lib/fetch_colors');
+const colorConfig = require('./source/config/colors');
 const rollupConfig = require('./rollup.config');
 
 function handleError(error) {
@@ -19,7 +22,15 @@ function handleError(error) {
 }
 
 gulp.task('clean', () => {
-  return del(["build"]);
+  return del(["build", "temp"]);
+});
+
+gulp.task('colors', () => {
+
+  return fetchColors(colorConfig).then((colors) => {
+    let json = JSON.stringify(colors, null, 2);
+    return file("colors.json", json).pipe(gulp.dest("temp"));
+  });
 });
 
 gulp.task('html', () => {

@@ -16,5 +16,11 @@ export default [
     opponent: 0x8dc6ff,
     board: 0x34495e,
     background: 0x22313f
+  },
+  {
+    player: 0xADF7D1,
+    opponent: 0x95E8D7,
+    board: 0x7DACE4,
+    background: 0x8971D0
   }
 ];
