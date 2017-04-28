@@ -9,8 +9,9 @@ function fetchColor({ id, indices }) {
       .match(/itemer[^,]+\W+(\w{6})(\w{6})(\w{6})(\w{6})/)
       .slice(1, 5);
 
-    let [ background, board, player ] =  indices.map(i => `#${ palette[i] }`);
-    return { background, board, player };
+    // let [ background, board, player ] =  indices.map(i => `#${ palette[i] }`);
+    let [ background, board, mark ] =  indices.map(i => parseInt(palette[i], 16));
+    return { background, board, mark };
   });
 }
 

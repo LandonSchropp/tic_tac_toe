@@ -62,7 +62,7 @@ gulp.task('stylesheets', () => {
     .pipe(connect.reload());
 });
 
-gulp.task('javascripts', () => {
+gulp.task('javascripts', [ "colors" ], () => {
   return rollup(rollupConfig)
     .on('error', handleError)
     .pipe(source('index.js'))

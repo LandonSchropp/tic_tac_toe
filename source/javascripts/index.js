@@ -3,7 +3,7 @@ import _ from "lodash";
 import Board from "./board";
 import Opponent from "./opponent";
 import Player from "./player";
-import colors from "./colors";
+import colors from "../../temp/colors.json";
 
 import { appearTween, gameOverTween } from './tweens';
 
@@ -28,6 +28,7 @@ function create() {
   boardSprite = game.add.sprite(0, 0, 'board');
   boardSprite.anchor.setTo(0.5, 0.5);
   boardSprite.position.setTo(game.world.centerX, game.world.centerY);
+
   boardSprite.tint = palette.board;
 
   // Scale the board so it properly fits in the canvas
@@ -85,7 +86,7 @@ function addMark(row, column, mark) {
 
   sprite.scale = boardSprite.scale.clone();
   sprite.anchor.set(0.5);
-  sprite.tint = palette[mark === 'x' ? 'player' : 'opponent'];
+  sprite.tint = palette.mark;
 
   // Tween the sprite
   return appearTween(game, sprite);
