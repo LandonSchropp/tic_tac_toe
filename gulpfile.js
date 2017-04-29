@@ -28,7 +28,7 @@ gulp.task('clean', () => {
 gulp.task('colors', () => {
   let fileCache = new FileCache("temp/color_file_cache");
 
-  gulp
+  return gulp
     .src("source/config/colors.json")
     .pipe(fileCache.filter())
     .pipe(transform(colors => {
