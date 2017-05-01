@@ -3,13 +3,11 @@ import _ from "lodash";
 import Board from "./board";
 import Opponent from "./opponent";
 import Player from "./player";
-import colors from "../../temp/colors.json";
+import palettes from "./palettes";
 
-import { appearTween, gameOverTween } from './tweens';
+import { appearTween, gameOverTween, colorTween } from './tweens';
 
-let palette = _.last(colors);
-
-let board, boardSprite, player, opponent, markSprites;
+let board, boardSprite, player, opponent, markSprites, palette, spaceKey;
 
 let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
 
@@ -22,6 +20,7 @@ function preload() {
 function create() {
 
   // Set the game background color
+  palette = palettes.nextPalette();
   game.stage.backgroundColor = palette.background;
 
   // Add the board sprite
@@ -34,6 +33,14 @@ function create() {
   // Scale the board so it properly fits in the canvas
   let scale = game.world.bounds.width / boardSprite.width * 0.9;
   boardSprite.scale.set(scale);
+
+  // Register the space key
+  spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  game.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
+  spaceKey.onUp.add(() => {
+    palette = palettes.nextPalette();
+    colorTween(game, boardSprite, _.flatten(markSprites), palette);
+  });
 
   // Kick off the game
   reset();

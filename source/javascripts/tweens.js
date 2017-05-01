@@ -89,3 +89,13 @@ export function gameOverTween(game, winnerSprites, loserSprites, colors) {
     sprites.map(sprite => rotateOut(game, sprite, 2000))
   ));
 }
+
+export function colorTween(game, boardSprite, markSprites, palette) {
+
+  return new Promise(resolve => {
+    game.stage.backgroundColor = palette.background;
+    boardSprite.tint = palette.board;
+    markSprites.forEach(markSprite => markSprite.tint = palette.mark);
+    resolve();
+  });
+}
