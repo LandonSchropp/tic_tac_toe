@@ -39,7 +39,7 @@ function create() {
   game.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
   spaceKey.onUp.add(() => {
     palette = palettes.nextPalette();
-    paletteTween(game, boardSprite, _.flatten(markSprites), palette);
+    paletteTween(game, boardSprite, _.compact(_.flatten(markSprites)), palette);
   });
 
   // Kick off the game
