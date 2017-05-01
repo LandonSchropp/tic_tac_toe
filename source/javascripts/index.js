@@ -5,7 +5,7 @@ import Opponent from "./opponent";
 import Player from "./player";
 import palettes from "./palettes";
 
-import { appearTween, gameOverTween, colorTween } from './tweens';
+import { appearTween, gameOverTween, paletteTween } from './tweens';
 
 let board, boardSprite, player, opponent, markSprites, palette, spaceKey;
 
@@ -39,7 +39,7 @@ function create() {
   game.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
   spaceKey.onUp.add(() => {
     palette = palettes.nextPalette();
-    colorTween(game, boardSprite, _.flatten(markSprites), palette);
+    paletteTween(game, boardSprite, _.flatten(markSprites), palette);
   });
 
   // Kick off the game

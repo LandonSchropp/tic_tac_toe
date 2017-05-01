@@ -90,12 +90,35 @@ export function gameOverTween(game, winnerSprites, loserSprites, colors) {
   ));
 }
 
-export function colorTween(game, boardSprite, markSprites, palette) {
+function colorTween(game, object, property, color, time) {
 
   return new Promise(resolve => {
-    game.stage.backgroundColor = palette.background;
-    boardSprite.tint = palette.board;
-    markSprites.forEach(markSprite => markSprite.tint = palette.mark);
-    resolve();
+    let startColor = object[property];
+
+    // Create an object used to apply the tween
+    let interpolator = { step: 0 };
+
+    // Create the tween
+    let tween = game.add.tween(interpolator).to({ step: 100 }, time);
+
+    // Interpolate the color every time the tween updates
+    tween.onUpdateCallback(() => {
+      object[property] = Phaser.Color.interpolateColor(startColor, color, 100, interpolator.step);
+    });
+
+    // Add the resolution function
+    tween.onComplete.add(resolve);
+
+    // start the tween
+    tween.start();
   });
+}
+
+export function paletteTween(game, boardSprite, markSprites, palette) {
+
+  return Promise.all([
+    colorTween(game, game.stage, "backgroundColor", palette.background, 100),
+    colorTween(game, boardSprite, "tint", palette.board, 100),
+    ...markSprites.map(markSprite => colorTween(game, markSprite, "tint", palette.mark, 100))
+  ]);
 }
