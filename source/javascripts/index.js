@@ -118,5 +118,7 @@ function gameOver() {
   let winnerSprites = mapCoordinatesToSprites(winnerCoordinates);
   let loserSprites = mapCoordinatesToSprites(loserCoordinates);
 
-  gameOverTween(game, winnerSprites, loserSprites, palette).then(reset);
+  palette = palettes.nextPalette();
+
+  gameOverTween(game, boardSprite, winnerSprites, loserSprites, palette).then(reset);
 }
