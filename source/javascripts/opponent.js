@@ -25,13 +25,8 @@ export default class Opponent {
     return _.minBy(this.board.emptySpaces(), ([row, column]) => {
       let clonedBoard = this.board.clone();
       clonedBoard.set(row, column, mark);
-      let score = this.minimaxScore(clonedBoard, "x");
-      return score;
+      return this.minimaxScore(clonedBoard, "x");
     });
-  }
-
-  randomMove() {
-    return _.sample(this.board.emptySpaces());
   }
 
   // This is a *really* rough implementation that could be cleaned up and optimized quite a bit.
@@ -53,7 +48,8 @@ export default class Opponent {
       return this.minimaxScore(clonedBoard, currentMark === "x" ? "o" : "x");
     });
 
-    // Determine whether to maximize or minimize the score (depending on who's playing)
-    return (currentMark === "x" ? _.max : _.min)(scores);
+    // Determine whether to maximize or minimize the score (depending on who's playing). Add a
+    // little randomness to prevent the opponent from being too good.
+    return (currentMark === "x" ? _.max : (Math.random() < 0.9 ? _.min : _.sample))(scores);
   }
 }
