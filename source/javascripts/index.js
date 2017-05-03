@@ -64,6 +64,7 @@ function reset() {
 function nextMove(currentPlayer) {
 
   // Kick off the move
+  // TODO: Remove the nesting on the promises
   currentPlayer.move().then(([ row, column ]) => {
 
     // Add the mark to the board
@@ -72,7 +73,7 @@ function nextMove(currentPlayer) {
       // TODO: Check if the game is over
       if (board.isGameOver()) { return gameOver(); }
 
-      // Triggler the next move
+      // Trigger the next move
       nextMove(currentPlayer === player ? opponent : player);
     });
   })
