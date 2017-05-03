@@ -80,4 +80,14 @@ export default class Board {
   isGameOver() {
     return !_.isNil(this.winner()) || this.emptySpaces().length === 0;
   }
+
+  movesCount() {
+    return _.compact(this._marks).length;
+  }
+
+  clone() {
+    let board = new Board();
+    board._marks = _.clone(this._marks);
+    return board;
+  }
 }
