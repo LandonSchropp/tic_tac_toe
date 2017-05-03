@@ -32,7 +32,7 @@ export function boardSet(board, row, column, mark) {
 }
 
 // Determine the the space at the provided space is empty.
-export function isBoardSpaceEmpty(board, row, column) {
+export function boardIsSpaceEmpty(board, row, column) {
   let mark = boardGet(board, row, column);
   return _.isUndefined(mark) ? undefined : _.isNull(mark);
 }
@@ -42,7 +42,7 @@ export const BOARD_SPACES = _.times(BOARD_SIZE * BOARD_SIZE, toSpace);
 
 // Returns an array of row/column pairs representing the empty spaces on the board.
 export function boardEmptySpaces(board) {
-  return BOARD_SPACES.filter(space => isBoardSpaceEmpty(board, ...space));
+  return BOARD_SPACES.filter(space => boardIsSpaceEmpty(board, ...space));
 }
 
 // Define all of the possible winning space combinations

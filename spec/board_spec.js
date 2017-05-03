@@ -7,7 +7,7 @@ import {
   BOARD_SPACES,
   boardGet,
   boardSet,
-  isBoardSpaceEmpty,
+  boardIsSpaceEmpty,
   boardEmptySpaces,
   boardWinnerSpaces,
   boardNumberOfMarks,
@@ -65,27 +65,27 @@ describe("boardSet", () => {
   });
 });
 
-describe("isBoardSpaceEmpty", () => {
+describe("boardIsSpaceEmpty", () => {
   beforeEach(() => board = boardSet(EMPTY_BOARD, 1, 2, "x"));
 
   context("when the space is empty", () => {
 
     it("returns true", () => {
-      expect(isBoardSpaceEmpty(EMPTY_BOARD, 1, 2)).to.equal(true);
+      expect(boardIsSpaceEmpty(EMPTY_BOARD, 1, 2)).to.equal(true);
     });
   });
 
   context("when the space contains a value", () => {
 
     it("returns the value", () => {
-      expect(isBoardSpaceEmpty(board, 1, 2)).to.equal(false);
+      expect(boardIsSpaceEmpty(board, 1, 2)).to.equal(false);
     });
   });
 
   context("when the coordinates are out of bounds", () => {
 
     it("returns undefined", () => {
-      expect(isBoardSpaceEmpty(board, 2, -2)).to.be.undefined;
+      expect(boardIsSpaceEmpty(board, 2, -2)).to.be.undefined;
     });
   });
 });
