@@ -3,20 +3,33 @@ import _ from "lodash";
 import { boardEmptySpaces, boardSet } from "./board";
 import minimaxScore from "./minimax_score";
 
-// Defines how perfect the AI plays the game
+// The level of difficulty of the AI.
 const DIFFICULTY = 0.85;
+
+// How long the AI should wait before moving
+const MOVE_DELAY = 500;
 
 // Returns a promise that resolves to the move for the opponent.
 export default function opponentMove(board) {
 
-  // Get the available spaces
-  let emptySpaces = boardEmptySpaces(board);
+  return new Promise(resolve => {
 
-  // Every once in a while, play a random move
-  if (Math.random() > DIFFICULTY) { return Promise.resolve(_.sample(emptySpaces)); }
+    // Delay the opponent's action to make it seem like the opponent is thinking
+    setTimeout(() => {
 
-  // Play the best possible move
-  return Promise.resolve(_.minBy(emptySpaces, (space) => {
-    return minimaxScore(boardSet(board, ...space, "o"), "x")
-  }));
+      // Get the available spaces
+      let emptySpaces = boardEmptySpaces(board);
+
+      // Every once in a while, play a random move
+      if (Math.random() > DIFFICULTY) { return resolve(_.sample(emptySpaces)); }
+
+      // Pick the best possible space
+      let idealSpace = _.minBy(emptySpaces, (space) => {
+        return minimaxScore(boardSet(board, ...space, "o"), "x")
+      });
+
+      // Resolve with the space
+      resolve(idealSpace)
+    }, MOVE_DELAY);
+  });
 }
