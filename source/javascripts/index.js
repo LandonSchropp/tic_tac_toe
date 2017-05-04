@@ -97,7 +97,7 @@ function nextMove(board, mark) {
 
       // Play the sound
       winner = boardWinner(board);
-      sounds.play({ x: "xWin", o: "oWin", draw: "draw" }[winner] || mark);
+      sounds.play({ x: "xWin", o: "oWin", draw: `${ mark }Draw` }[winner] || mark);
 
       // Add the mark sprite
       return addMarkSprite(row, column, mark)
