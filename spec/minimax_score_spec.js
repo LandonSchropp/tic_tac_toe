@@ -62,7 +62,7 @@ describe("minimaxScore", () => {
       board = boardSet(board, 1, 1, "x");
       board = boardSet(board, 1, 2, "x");
       board = boardSet(board, 2, 2, "o");
-    })
+    });
 
     it("returns the correct negative score", () => {
       expect(minimaxScore(board, "o")).to.equal(0);
@@ -84,5 +84,5 @@ describe("minimaxScore", () => {
         expect(minimaxScore(board, "o")).to.equal(-3);
       });
     });
-  })
+  });
 });
