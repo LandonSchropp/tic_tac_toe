@@ -24,6 +24,7 @@ const MOVE_FUNCTIONS = {
 
 let board, boardSprite, markSprites, palette, spaceKey;
 
+// Create the game
 let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
 
 function preload() {
@@ -35,6 +36,9 @@ function preload() {
 
   // Load the sounds
   sounds.preload(game);
+
+  // Make the game take up the full area of the screen
+  game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 }
 
 function create() {
