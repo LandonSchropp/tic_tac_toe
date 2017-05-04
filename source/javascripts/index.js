@@ -3,8 +3,9 @@ import _ from "lodash";
 import playerMove from "./player_move";
 import opponentMove from "./opponent_move";
 import palettes from "./palettes";
+import sounds from "./sounds";
 
-import { otherMark } from "./marks";
+import otherMark from "./other_mark";
 import { appearTween, gameOverTween, paletteTween } from './tweens';
 
 import {
@@ -26,12 +27,20 @@ let board, boardSprite, markSprites, palette, spaceKey;
 let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
 
 function preload() {
+
+  // Load the images
   game.load.image('board', '/images/board.png');
   game.load.image("x", '/images/x.png');
   game.load.image("o", '/images/o.png');
+
+  // Load the sounds
+  sounds.preload(game);
 }
 
 function create() {
+
+  // Create the sounds
+  sounds.create();
 
   // Set the game background color
   palette = palettes.nextPalette();
@@ -75,18 +84,28 @@ function reset(mark) {
 // Loops the game, letting each player go in sequence
 function nextMove(board, mark) {
 
+  let winner;
+
   // Call the move function
   MOVE_FUNCTIONS[mark](board, boardSprite)
 
     // Add the mark
     .then(([ row, column ]) => {
+
+      // Place the mark on the baord
       board = boardSet(board, row, column, mark);
+
+      // Play the sound
+      winner = boardWinner(board);
+      sounds.play({ x: "xWin", o: "oWin", draw: "draw" }[winner] || mark);
+
+      // Add the mark sprite
       return addMarkSprite(row, column, mark)
     })
 
     // If the game is over, end the game. Otherwise, trigger the next move.
     .then(() => {
-      if (!_.isNil(boardWinner(board))) { return gameOver(board, mark); }
+      if (!_.isNil(winner)) { return gameOver(board, mark); }
       nextMove(board, otherMark(mark));
     });
 }

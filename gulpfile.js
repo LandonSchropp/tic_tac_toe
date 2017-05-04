@@ -46,6 +46,13 @@ gulp.task('html', () => {
     .pipe(connect.reload());
 });
 
+gulp.task('sounds', () => {
+  return gulp
+    .src('source/sounds/**')
+    .pipe(gulp.dest('build/sounds'))
+    .pipe(connect.reload());
+});
+
 gulp.task('images', () => {
   return gulp
     .src('source/images/**')
@@ -71,7 +78,7 @@ gulp.task('javascripts', [ "colors" ], () => {
 });
 
 gulp.task('build', (callback) => {
-  runSequence('clean', 'html', 'images', 'stylesheets', 'javascripts', callback);
+  runSequence('clean', 'html', 'sounds', 'images', 'stylesheets', 'javascripts', callback);
 });
 
 gulp.task('watch', ["build"], () => {
@@ -83,6 +90,7 @@ gulp.task('watch', ["build"], () => {
 
   // Kick off the watchers
   watch("source/config/colors.json", run('javascripts'));
+  watch("source/sounds/**", run('sounds'));
   watch("source/images/**", run('images'));
   watch("source/**/*.html", run('html'));
   watch("source/javascripts/**", run('javascripts'));
