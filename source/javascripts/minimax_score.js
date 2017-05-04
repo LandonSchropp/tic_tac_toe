@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { BOARD_SIZE, boardEmptySpaces, boardSet, boardWinner, boardNumberOfMarks } from "./board";
 import otherMark from "./other_mark";
 
@@ -13,7 +15,7 @@ const ALPHA = Number.MIN_VALUE;
 const BETA = Number.MAX_VALUE;
 
 // Returns the minimax score for the provided board.
-export default function minimaxScore(board, mark, alpha = ALPHA, beta = BETA) {
+let minimaxScore = _.memoize(function(board, mark, alpha = ALPHA, beta = BETA) {
 
   // If the game is over, return the appropriate score
   switch(boardWinner(board)) {
@@ -50,4 +52,7 @@ export default function minimaxScore(board, mark, alpha = ALPHA, beta = BETA) {
 
   // Return the score
   return mark === "x" ? alpha : beta;
-}
+
+}, (board, mark) => `${ board.join(",") }|${ mark }`);
+
+export default minimaxScore;
