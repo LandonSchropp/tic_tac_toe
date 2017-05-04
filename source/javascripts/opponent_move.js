@@ -4,7 +4,7 @@ import { boardEmptySpaces, boardSet } from "./board";
 import minimaxScore from "./minimax_score";
 
 // Defines how perfect the AI plays the game
-const DIFFICULTY = 0.8;
+const DIFFICULTY = 0.9;
 
 // Returns a promise that resolves to the move for the opponent.
 export default function opponentMove(board) {
