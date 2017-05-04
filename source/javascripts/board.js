@@ -80,7 +80,7 @@ export function boardNumberOfMarks(board) {
 // Returns the result of the current board. If a mark has one, this function returns that mark. If
 // it's a draw, this function returns `"draw"`. Otherwise, if the game is still in progress, it
 // returns `null`.
-export function boardResult(board) {
+export function boardWinner(board) {
   let space = _.first(boardWinnerSpaces(board));
   if (!_.isNil(space)) { return boardGet(board, ...space) }
   if (boardNumberOfMarks(board) === 9) { return "draw"; }

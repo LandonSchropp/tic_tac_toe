@@ -4,7 +4,7 @@ import playerMove from "./player_move";
 import opponentMove from "./opponent_move";
 import palettes from "./palettes";
 
-import { PLAYER_MARK, OPPONENT_MARK, otherMark } from "./marks";
+import { otherMark } from "./marks";
 import { appearTween, gameOverTween, paletteTween } from './tweens';
 
 import {
@@ -12,13 +12,13 @@ import {
   EMPTY_BOARD,
   BOARD_SPACES,
   boardSet,
-  boardResult,
+  boardWinner,
   boardWinnerSpaces
 } from "./board";
 
 const MOVE_FUNCTIONS = {
-  [PLAYER_MARK]: playerMove,
-  [OPPONENT_MARK]: opponentMove
+  x: playerMove,
+  o: opponentMove
 };
 
 let board, boardSprite, markSprites, palette, spaceKey;
@@ -27,8 +27,8 @@ let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
 
 function preload() {
   game.load.image('board', '/images/board.png');
-  game.load.image(PLAYER_MARK, '/images/x.png');
-  game.load.image(OPPONENT_MARK, '/images/o.png');
+  game.load.image("x", '/images/x.png');
+  game.load.image("o", '/images/o.png');
 }
 
 function create() {
@@ -57,7 +57,7 @@ function create() {
   });
 
   // Kick off the game
-  reset(PLAYER_MARK);
+  reset("x");
 }
 
 function reset(mark) {
@@ -86,7 +86,7 @@ function nextMove(board, mark) {
 
     // If the game is over, end the game. Otherwise, trigger the next move.
     .then(() => {
-      if (!_.isNil(boardResult(board))) { return gameOver(board, mark); }
+      if (!_.isNil(boardWinner(board))) { return gameOver(board, mark); }
       nextMove(board, otherMark(mark));
     });
 }

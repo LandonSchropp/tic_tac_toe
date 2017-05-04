@@ -2,7 +2,6 @@ import _ from "lodash";
 
 import { boardEmptySpaces, boardSet } from "./board";
 import minimaxScore from "./minimax_score";
-import { PLAYER_MARK, OPPONENT_MARK } from "./marks";
 
 // Defines how perfect the AI plays the game
 const DIFFICULTY = 0.8;
@@ -17,7 +16,7 @@ export default function opponentMove(board) {
 
     // Play the best possible move
     resolve(_.minBy(spaces, (space) => {
-      return minimaxScore(boardSet(board, ...space, OPPONENT_MARK), PLAYER_MARK)
+      return minimaxScore(boardSet(board, ...space, "o"), "x")
     }));
   });
 }

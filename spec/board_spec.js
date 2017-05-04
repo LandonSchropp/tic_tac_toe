@@ -11,7 +11,7 @@ import {
   boardEmptySpaces,
   boardWinnerSpaces,
   boardNumberOfMarks,
-  boardResult
+  boardWinner
 } from "../source/javascripts/board";
 
 let board;
@@ -179,13 +179,13 @@ describe("boardMovesCount", () => {
   });
 });
 
-describe("boardResult", () => {
+describe("boardWinner", () => {
   beforeEach(() => board = EMPTY_BOARD)
 
   context("when the board is empty", () => {
 
     it("returns null", () => {
-      expect(boardResult(board)).to.equal(null);
+      expect(boardWinner(board)).to.equal(null);
     });
   });
 
@@ -197,7 +197,7 @@ describe("boardResult", () => {
     });
 
     it("returns null", () => {
-      expect(boardResult(board)).to.equal(null);
+      expect(boardWinner(board)).to.equal(null);
     });
   });
 
@@ -209,7 +209,7 @@ describe("boardResult", () => {
     });
 
     it("returns the player's mark", () => {
-      expect(boardResult(board)).to.equal("x");
+      expect(boardWinner(board)).to.equal("x");
     });
   });
 
@@ -221,7 +221,7 @@ describe("boardResult", () => {
     });
 
     it("returns the player's mark", () => {
-      expect(boardResult(board)).to.equal("o");
+      expect(boardWinner(board)).to.equal("o");
     });
   });
 
@@ -233,7 +233,7 @@ describe("boardResult", () => {
     });
 
     it("returns the player's mark", () => {
-      expect(boardResult(board)).to.equal("x");
+      expect(boardWinner(board)).to.equal("x");
     });
   });
 
@@ -245,7 +245,7 @@ describe("boardResult", () => {
     });
 
     it("returns the player's mark", () => {
-      expect(boardResult(board)).to.equal("o");
+      expect(boardWinner(board)).to.equal("o");
     });
   });
 
@@ -263,7 +263,7 @@ describe("boardResult", () => {
     });
 
     it("returns 'draw'", () => {
-      expect(boardResult(board)).to.equal("draw");
+      expect(boardWinner(board)).to.equal("draw");
     });
   });
 });

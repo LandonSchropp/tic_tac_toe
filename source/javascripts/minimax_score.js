@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { BOARD_SIZE, boardEmptySpaces, boardSet, boardResult, boardNumberOfMarks } from "./board";
-import { PLAYER_MARK, OPPONENT_MARK, otherMark } from "./marks";
+import { BOARD_SIZE, boardEmptySpaces, boardSet, boardWinner, boardNumberOfMarks } from "./board";
+import otherMark from "./other_mark";
 
 // This algorithm implemented by following the methodology in this excellent article:
 // https://mostafa-samir.github.io/Tic-Tac-Toe-AI/.
@@ -12,10 +12,10 @@ const SCORE_BOUND = BOARD_SIZE * BOARD_SIZE + 1;
 export default function minimaxScore(board, mark) {
 
   // If the game is over, return the appropriate score
-  switch(boardResult(board)) {
-    case PLAYER_MARK:
+  switch(boardWinner(board)) {
+    case "x":
       return SCORE_BOUND - boardNumberOfMarks(board);
-    case OPPONENT_MARK:
+    case "o":
       return -SCORE_BOUND + boardNumberOfMarks(board);
     case "draw":
       return 0;
@@ -27,5 +27,5 @@ export default function minimaxScore(board, mark) {
   });
 
   // Determine whether to maximize or minimize the score (depending on who's playing).
-  return (mark === PLAYER_MARK ? _.max : _.min)(scores);
+  return (mark === "x" ? _.max : _.min)(scores);
 }
