@@ -25,9 +25,12 @@ const MOVE_FUNCTIONS = {
 let board, boardSprite, markSprites, palette, spaceKey;
 
 // Create the game
-let game = new Phaser.Game(380, 720, Phaser.AUTO, '', { preload, create });
+let game = new Phaser.Game(380, 380, Phaser.AUTO, '', { preload, create });
 
 function preload() {
+
+  // Make the game take up the full area of the screen
+  game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 
   // Load the images
   game.load.image('board', '/images/board.png');
@@ -36,9 +39,6 @@ function preload() {
 
   // Load the sounds
   sounds.preload(game);
-
-  // Make the game take up the full area of the screen
-  game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 }
 
 function create() {
@@ -52,13 +52,8 @@ function create() {
 
   // Add the board sprite
   boardSprite = game.add.sprite(0, 0, 'board');
-  boardSprite.anchor.setTo(0.5, 0.5);
-  boardSprite.position.setTo(game.world.centerX, game.world.centerY);
+  boardSprite.anchor.setTo(0.5);
   boardSprite.tint = palette.board;
-
-  // Scale the board so it properly fits in the canvas
-  let scale = game.world.bounds.width / boardSprite.width * 0.9;
-  boardSprite.scale.set(scale);
 
   // Register the space key
   spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -68,6 +63,10 @@ function create() {
     palette = palettes.nextPalette();
     paletteTween(game, boardSprite, _.compact(_.flatten(markSprites)), palette);
   });
+
+  // Register the resize callback and trigger it after the screen has reflowed
+  game.scale.setResizeCallback(resize);
+  setTimeout(resize, 1);
 
   // Kick off the game
   reset("x");
@@ -124,7 +123,6 @@ function addMarkSprite(row, column, mark) {
   let sprite = game.add.sprite(x, y, mark);
   markSprites[row][column] = sprite;
 
-  sprite.scale = boardSprite.scale.clone();
   sprite.anchor.set(0.5);
   sprite.tint = palette.mark;
 
@@ -155,4 +153,31 @@ function gameOver(board, mark) {
 
   gameOverTween(game, boardSprite, winnerSprites, loserSprites, palette)
     .then(() => reset(otherMark(mark)));
+}
+
+// Positions the camera above the board sprite
+function resize() {
+
+  // Disable the bounds on the camera (allowing it to move freely)
+  game.camera.bounds = null;
+
+  // Scale the camera so the board fits inside its view
+  let scale = Math.min(game.width / boardSprite.width, game.height / boardSprite.height) * 0.9;
+  game.camera.scale.set(scale);
+
+  console.log(
+    "RESIZING",
+    game.width,
+    game.height,
+    boardSprite.width,
+    boardSprite.height,
+    scale
+  );
+
+  // Center the camera on the board sprite
+  // HACK: This is required because Phaser can't seem to focus the camer after the scale has been
+  // reset.
+  setTimeout(() => {
+    game.camera.focusOnXY(boardSprite.x, boardSprite.y);
+  });
 }

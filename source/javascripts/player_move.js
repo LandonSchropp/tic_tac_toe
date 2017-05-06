@@ -9,9 +9,12 @@ export default function playerMove(board, boardSprite) {
     boardSprite.inputEnabled = true;
     boardSprite.events.onInputDown.add((sprite, pointer) => {
 
+      // Convert the pointer to the local coordinates of the board sprite
+      let point = boardSprite.game.input.getLocalPosition(boardSprite, pointer);
+
       // Determine the space the user clicked on.
-      let row = Math.floor((pointer.y - sprite.top) * BOARD_SIZE / sprite.height);
-      let column = Math.floor((pointer.x - sprite.left) * BOARD_SIZE / sprite.width);
+      let row = Math.floor((point.y - sprite.top) * BOARD_SIZE / sprite.height);
+      let column = Math.floor((point.x - sprite.left) * BOARD_SIZE / sprite.width);
 
       // Ignore the click if the space is already occupied
       if (!boardIsSpaceEmpty(board, row, column)) { return; }
