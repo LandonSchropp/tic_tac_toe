@@ -64,9 +64,9 @@ function create() {
     paletteTween(game, boardSprite, _.compact(_.flatten(markSprites)), palette);
   });
 
-  // Register the resize callback and trigger it after the screen has reflowed
-  game.scale.setResizeCallback(resize);
-  setTimeout(resize, 1);
+  // Register the resize callback and trigger the initial resize callback
+  game.scale.onSizeChange.add(resize);
+  resize();
 
   // Kick off the game
   reset("x");
@@ -161,23 +161,10 @@ function resize() {
   // Disable the bounds on the camera (allowing it to move freely)
   game.camera.bounds = null;
 
+  // Center the camera on the board sprite
+  game.camera.focusOn(boardSprite);
+
   // Scale the camera so the board fits inside its view
   let scale = Math.min(game.width / boardSprite.width, game.height / boardSprite.height) * 0.9;
   game.camera.scale.set(scale);
-
-  console.log(
-    "RESIZING",
-    game.width,
-    game.height,
-    boardSprite.width,
-    boardSprite.height,
-    scale
-  );
-
-  // Center the camera on the board sprite
-  // HACK: This is required because Phaser can't seem to focus the camer after the scale has been
-  // reset.
-  setTimeout(() => {
-    game.camera.focusOnXY(boardSprite.x, boardSprite.y);
-  });
 }
