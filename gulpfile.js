@@ -25,6 +25,20 @@ gulp.task('clean', () => {
   return del(["www", "temp"]);
 });
 
+// Rather than mess around with trying to get Phaser to work with Rollup, I'm simply copying the
+// pre-built library to the www directory. Phaser 3 supports module imports, which should eliminate
+// the need for this kind of thing.
+gulp.task('vendor', () => {
+  return gulp
+    .src([
+      'node_modules/phaser/build/phaser.js',
+      'node_modules/phaser/build/phaser.map',
+      'node_modules/phaser/build/pixi.js',
+      'node_modules/phaser/build/pixi.map'
+    ])
+    .pipe(gulp.dest('www/javascripts/vendor'));
+});
+
 gulp.task('colors', () => {
   let fileCache = new FileCache("temp/color_file_cache");
 
@@ -78,7 +92,16 @@ gulp.task('javascripts', [ "colors" ], () => {
 });
 
 gulp.task('build', (callback) => {
-  runSequence('clean', 'html', 'sounds', 'images', 'stylesheets', 'javascripts', callback);
+  runSequence(
+    'clean',
+    'html',
+    'vendor',
+    'sounds',
+    'images',
+    'stylesheets',
+    'javascripts',
+    callback
+  );
 });
 
 gulp.task('watch', ["build"], () => {
