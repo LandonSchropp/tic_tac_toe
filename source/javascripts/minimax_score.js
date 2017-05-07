@@ -53,6 +53,6 @@ let minimaxScore = _.memoize(function(board, mark, alpha = ALPHA, beta = BETA) {
   // Return the score
   return mark === "x" ? alpha : beta;
 
-}, (board, mark) => `${ board.join(",") }|${ mark }`);
+}, (board, ...args) => `${ board.join(",") }|${ args.join("|") }`);
 
 export default minimaxScore;
