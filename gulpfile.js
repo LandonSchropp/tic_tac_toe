@@ -22,7 +22,7 @@ function handleError(error) {
 }
 
 gulp.task('clean', () => {
-  return del(["build", "temp"]);
+  return del(["www", "temp"]);
 });
 
 gulp.task('colors', () => {
@@ -42,21 +42,21 @@ gulp.task('colors', () => {
 gulp.task('html', () => {
   return gulp
     .src("source/**/*.html")
-    .pipe(gulp.dest("build"))
+    .pipe(gulp.dest("www"))
     .pipe(connect.reload());
 });
 
 gulp.task('sounds', () => {
   return gulp
     .src('source/sounds/**')
-    .pipe(gulp.dest('build/sounds'))
+    .pipe(gulp.dest('www/sounds'))
     .pipe(connect.reload());
 });
 
 gulp.task('images', () => {
   return gulp
     .src('source/images/**')
-    .pipe(gulp.dest('build/images'))
+    .pipe(gulp.dest('www/images'))
     .pipe(connect.reload());
 });
 
@@ -65,7 +65,7 @@ gulp.task('stylesheets', () => {
     .src('source/stylesheets/index.sass')
     .pipe(sassGlob())
     .pipe(sass())
-    .pipe(gulp.dest('build/stylesheets'))
+    .pipe(gulp.dest('www/stylesheets'))
     .pipe(connect.reload());
 });
 
@@ -73,7 +73,7 @@ gulp.task('javascripts', [ "colors" ], () => {
   return rollup(rollupConfig)
     .on('error', handleError)
     .pipe(source('index.js'))
-    .pipe(gulp.dest('build/javascripts'))
+    .pipe(gulp.dest('www/javascripts'))
     .pipe(connect.reload());
 });
 
@@ -97,6 +97,6 @@ gulp.task('watch', ["build"], () => {
   watch("source/stylesheets/**", run('stylesheets'));
 
   // Start the server
-  connect.server({ root: "build", livereload: true });
+  connect.server({ root: "www", livereload: true });
 });
 
