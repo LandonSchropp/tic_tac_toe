@@ -33,9 +33,9 @@ function preload() {
   game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 
   // Load the images
-  game.load.image('board', '/images/board.png');
-  game.load.image("x", '/images/x.png');
-  game.load.image("o", '/images/o.png');
+  game.load.image('board', 'images/board.png');
+  game.load.image("x", 'images/x.png');
+  game.load.image("o", 'images/o.png');
 
   // Load the sounds
   sounds.preload(game);

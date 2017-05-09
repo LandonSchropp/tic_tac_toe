@@ -8,7 +8,7 @@ export default {
 
   preload(game) {
     _game = game;
-    SOUNDS.forEach(name => game.load.audio(name, [ `/sounds/${ _.snakeCase(name) }.mp3` ]));
+    SOUNDS.forEach(name => game.load.audio(name, [ `sounds/${ _.snakeCase(name) }.mp3` ]));
   },
 
   create() {
