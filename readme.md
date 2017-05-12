@@ -6,7 +6,8 @@ A simple tic-tac-toe variant. The main purpose of this project is to learn the P
 
 * `scripts/clean`: Remove the build artifacts.
 * `scripts/build`: Build the project.
-* `scripts/watch`: Watch the source files for changes and rebuild them.
+* `scripts/watch`: Watch the source files for changes and rebuild them. Also runs a small
+  development server.
 * `scripts/lint`: Run the project's linter.
 * `scripts/test`: Run the project's tests.
 
