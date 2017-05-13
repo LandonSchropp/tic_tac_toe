@@ -5,6 +5,7 @@ const connect = require('gulp-connect');
 const del = require('del');
 const gulp = require('gulp');
 const gutil = require('gulp-util')
+const rename = require('gulp-rename');
 const rollup = require('rollup-stream');
 const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
@@ -57,6 +58,7 @@ gulp.task('colors', () => {
 gulp.task('resources', function () {
   return gulp.src(`source/resources/*.svg`)
     .pipe(svg2png())
+    .pipe(rename({ basename: `Default@3x~universal~anyany` }))
     .pipe(gulp.dest('www/resources'));
 });
 
