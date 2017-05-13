@@ -22,7 +22,7 @@ function handleError(error) {
 }
 
 gulp.task('clean', () => {
-  return del(["www", "temp"]);
+  return del(["www", "temp", "plugins", "platforms"]);
 });
 
 // Rather than mess around with trying to get Phaser to work with Rollup, I'm simply copying the
@@ -93,7 +93,6 @@ gulp.task('javascripts', [ "colors" ], () => {
 
 gulp.task('build', (callback) => {
   runSequence(
-    'clean',
     'html',
     'vendor',
     'sounds',
@@ -120,6 +119,6 @@ gulp.task('watch', ["build"], () => {
   watch("source/stylesheets/**", run('stylesheets'));
 
   // Start the server
-  connect.server({ root: "www", livereload: true });
+  connect.server({ root: "www", livereload: true, port: 4567 });
 });
 
