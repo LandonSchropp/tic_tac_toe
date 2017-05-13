@@ -19,3 +19,22 @@ Note: This assumes the `cordova` CLI is installed and present in your `$PATH`.
 * `cordova platform add ios`: Add iOS to the list of platforms.
 * `cordova emulate ios`: Run the application in the iOS simulator.
 * `cordova run ios`: Run the application on a connected iOS device.
+
+## Cordova Gotchas
+
+There are a few gotchas in this project, all of which come with Cordova.
+
+* The project's build directory must be `www`. Cordova doesn't allow you to configure a different
+  directory.
+* Whenever you run Cordova commands that update the packages, the formatting of the `config.xml` and
+  `package.json` files gets screwed up. They must be fixed before they're committed.
+* This project must use NPM. Cordova assumes you're using NPM, and bad things happen if you try to
+  use Yarn instead.
+* Before launching the project on a phone, you must set the deployment target and team manually in
+  the project settings.
+* If you don't build the assets for the project before running any `cordova` commands, Cordova will
+  complain that the project isn't Cordova-based.
+* If you want to change the splash screen, you must re-add the platform from scratch. Rebuilding
+  won't do it.
+* The splash screen file can be located in any directory, but it must *exactly* follow the naming
+  convention specified in the [repo](https://goo.gl/vQPVDr), or it won't work.
