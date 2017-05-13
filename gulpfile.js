@@ -10,6 +10,7 @@ const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
 const sassGlob = require('gulp-sass-glob');
 const source = require('vinyl-source-stream');
+const svg2png = require('gulp-svg2png');
 const transform = require('gulp-transform');
 const watch = require('gulp-watch');
 
@@ -53,6 +54,12 @@ gulp.task('colors', () => {
     .pipe(gulp.dest("temp"));
 });
 
+gulp.task('resources', function () {
+  return gulp.src(`source/resources/*.svg`)
+    .pipe(svg2png())
+    .pipe(gulp.dest('www/resources'));
+});
+
 gulp.task('html', () => {
   return gulp
     .src("source/**/*.html")
@@ -93,6 +100,7 @@ gulp.task('javascripts', [ "colors" ], () => {
 
 gulp.task('build', (callback) => {
   runSequence(
+    'resources',
     'html',
     'vendor',
     'sounds',
@@ -112,6 +120,7 @@ gulp.task('watch', ["build"], () => {
 
   // Kick off the watchers
   watch("source/config/colors.json", run('javascripts'));
+  watch("source/resources/**", run('resources'));
   watch("source/sounds/**", run('sounds'));
   watch("source/images/**", run('images'));
   watch("source/**/*.html", run('html'));
