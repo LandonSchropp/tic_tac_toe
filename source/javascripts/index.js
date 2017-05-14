@@ -4,6 +4,7 @@ import playerMove from "./player_move";
 import opponentMove from "./opponent_move";
 import palettes from "./palettes";
 import sounds from "./sounds";
+import { loadEnvironment, hideSplashScreen } from "./environment";
 
 import otherMark from "./other_mark";
 import { appearTween, gameOverTween, paletteTween } from './tweens';
@@ -22,10 +23,12 @@ const MOVE_FUNCTIONS = {
   o: opponentMove
 };
 
-let board, boardSprite, markSprites, palette, spaceKey;
+let game, board, boardSprite, markSprites, palette, spaceKey;
 
-// Create the game
-let game = new Phaser.Game(380, 380, Phaser.AUTO, '', { preload, create });
+// Kick off the game
+loadEnvironment().then(() => {
+  game = new Phaser.Game(380, 380, Phaser.AUTO, '', { preload, create });
+});
 
 function preload() {
 
@@ -67,6 +70,9 @@ function create() {
   // Register the resize callback and trigger the initial resize callback
   game.scale.onSizeChange.add(resize);
   resize();
+
+  // Hide the splash screen (after the next render)
+  setTimeout(hideSplashScreen, 0);
 
   // Kick off the game
   reset("x");
