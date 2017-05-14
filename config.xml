@@ -24,6 +24,9 @@
 
   <!-- Configure the splash screen -->
   <splash src="www/resources/Default@3x~universal~anyany.png" />
+  <preference name="AutoHideSplashScreen" value="false" />
+  <preference name="FadeSplashScreenDuration" value="300"/>
+  <preference name="ShowSplashScreenSpinner" value="false"/>
 
   <!-- Specify the plugins -->
   <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
