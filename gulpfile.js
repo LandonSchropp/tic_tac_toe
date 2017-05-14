@@ -4,8 +4,8 @@ const FileCache = require("gulp-file-cache");
 const connect = require('gulp-connect');
 const del = require('del');
 const gulp = require('gulp');
-const gulpIf = require('gulp-if');
 const gutil = require('gulp-util')
+const mobileIcons = require('gulp-mobile-icons');
 const rename = require('gulp-rename');
 const rollup = require('rollup-stream');
 const runSequence = require('run-sequence');
@@ -56,10 +56,16 @@ gulp.task('colors', () => {
     .pipe(gulp.dest("temp"));
 });
 
-gulp.task('resources', function () {
-  return gulp.src(`source/resources/*.svg`)
-    .pipe(gulpIf("**/splash.svg", rename({ basename: `Default@3x~universal~anyany` })))
+gulp.task('icons', function () {
+  return gulp.src(`source/resources/icon.svg`)
+    .pipe(mobileIcons())
+    .pipe(gulp.dest('www/resources'));
+});
+
+gulp.task('splash', function () {
+  return gulp.src(`source/resources/splash.svg`)
     .pipe(svg2png())
+    .pipe(rename({ basename: `Default@3x~universal~anyany` }))
     .pipe(gulp.dest('www/resources'));
 });
 
@@ -103,7 +109,8 @@ gulp.task('javascripts', [ "colors" ], () => {
 
 gulp.task('build', (callback) => {
   runSequence(
-    'resources',
+    'icons',
+    'splash',
     'html',
     'vendor',
     'sounds',
@@ -123,7 +130,8 @@ gulp.task('watch', ["build"], () => {
 
   // Kick off the watchers
   watch("source/config/colors.json", run('javascripts'));
-  watch("source/resources/**", run('resources'));
+  watch("source/resources/icon.svg", run('icons'));
+  watch("source/resources/splash.svg", run('splash'));
   watch("source/sounds/**", run('sounds'));
   watch("source/images/**", run('images'));
   watch("source/**/*.html", run('html'));
