@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+/usr/libexec/PlistBuddy \
+  -c 'Add :UIStatusBarHidden bool true' \
+  platforms/ios/Tic-Tac-Toe/Tic-Tac-Toe-Info.plist
+
+/usr/libexec/PlistBuddy \
+  -c 'Add :UIViewControllerBasedStatusBarAppearance bool false' \
+  platforms/ios/Tic-Tac-Toe/Tic-Tac-Toe-Info.plist
