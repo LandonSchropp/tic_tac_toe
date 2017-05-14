@@ -29,8 +29,11 @@
   <preference name="FadeSplashScreenDuration" value="300"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
 
-  <!-- Configure the icon. -->
+  <!-- iOS-specific configuration -->
   <platform name="ios">
+
+    <!-- Set the minimum deployment version -->
+    <preference name="deployment-target" value="10.3" />
 
     <!-- App icon -->
     <icon src="www/resources/ios-57.png"      width="57"  height="57"/>
