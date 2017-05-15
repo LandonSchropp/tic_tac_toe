@@ -1,6 +1,7 @@
-# Tic Tac Toe
+# Tic Tac Yo
 
-A simple tic-tac-toe variant. The main purpose of this project is to learn the Phaser game engine.
+A simple tic-tac-toe game. The main purpose of this project was for me to learn the Phaser game
+engine.
 
 ## Commands
 

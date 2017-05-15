@@ -1,6 +1,6 @@
 {
-  "name": "tic_tac_toe",
-  "description": "A simple tic-tac-toe game",
+  "name": "tic_tac_yo",
+  "description": "A simple little tic tac toe game",
   "author": "Landon Schropp <schroppl@gmail.com>",
   "dependencies": {
     "axios": "^0.16.1",

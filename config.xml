@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 
 <widget
-  id="com.landonschropp.tictactoe"
+  id="com.landonschropp.tictacyo"
   version="1.0.0"
   xmlns="http://www.w3.org/ns/widgets"
   xmlns:cdv="http://cordova.apache.org/ns/1.0">
 
   <!-- App metadata -->
-  <name>Tic-Tac-Toe</name>
-  <description>An awesome little tic-tac-toe game.</description>
+  <name>Tic Tac Yo</name>
+  <description>An awesome little tic tac toe game.</description>
   <author email="schroppl@gmail.com" href="https://landonschropp.com">Landon Schropp</author>
 
   <!-- Configure the application, its web view and its server. -->
