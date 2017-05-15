@@ -3,16 +3,11 @@
     <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
     <title>icon</title>
     <desc>Created with Sketch.</desc>
-    <defs>
-        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
-            <stop stop-color="#680099" offset="0%"></stop>
-            <stop stop-color="#530079" offset="100%"></stop>
-        </linearGradient>
-    </defs>
+    <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="icon">
-            <rect id="Rectangle-2" fill="url(#linearGradient-1)" x="0" y="0" width="512" height="512"></rect>
-            <path d="M256,215.824818 L124.175182,84 L84,124.175182 L215.824818,256 L84,387.824818 L124.175182,428 L256,296.175182 L387.824818,428 L428,387.824818 L296.175182,256 L428,124.175182 L387.824818,84 L256,215.824818 Z" id="x" fill="#F25D9C" fill-rule="nonzero"></path>
+            <rect id="Rectangle-2" fill="#B90056" x="0" y="0" width="512" height="512"></rect>
+            <path d="M256,215.824818 L124.175182,84 L84,124.175182 L215.824818,256 L84,387.824818 L124.175182,428 L256,296.175182 L387.824818,428 L428,387.824818 L296.175182,256 L428,124.175182 L387.824818,84 L256,215.824818 Z" id="x" fill="#FDBAE0" fill-rule="nonzero"></path>
         </g>
     </g>
 </svg>
