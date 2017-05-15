@@ -72,7 +72,10 @@ function create() {
   resize();
 
   // Hide the splash screen (after the next render)
-  setTimeout(hideSplashScreen, 0);
+  // HACK: I'm using a setTimeout for this because the screen flashes black when the app first loads
+  // otherwise. There's probably a better way to do this, but I'm burnt out on this problem at this
+  // point.
+  setTimeout(hideSplashScreen, 100);
 
   // Kick off the game
   reset("x");
