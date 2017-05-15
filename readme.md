@@ -19,6 +19,8 @@ Note: This assumes the `cordova` CLI is installed and present in your `$PATH`.
 * `cordova platform add ios`: Add iOS to the list of platforms.
 * `cordova emulate ios`: Run the application in the iOS simulator.
 * `cordova run ios`: Run the application on a connected iOS device.
+* `cordova build ios --device --release`: Create a release `.ipa` build of the application for the
+  App Store.
 
 ## Cordova Gotchas
 
