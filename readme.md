@@ -14,8 +14,6 @@ engine.
 
 ### iOS
 
-Note: This assumes the `cordova` CLI is installed and present in your `$PATH`.
-
 * `cordova requirements`: Ensures all of the dependencies for Cordova are installed.
 * `cordova platform add ios`: Add iOS to the list of platforms.
 * `cordova emulate ios`: Run the application in the iOS simulator.
