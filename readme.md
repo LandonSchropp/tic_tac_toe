@@ -30,11 +30,11 @@ There are a few gotchas in this project, all of which come with Cordova.
   `package.json` files gets screwed up. They must be fixed before they're committed.
 * This project must use NPM. Cordova assumes you're using NPM, and bad things happen if you try to
   use Yarn instead.
-* Before launching the project on a phone, you must set the deployment target and team manually in
-  the project settings.
 * If you don't build the assets for the project before running any `cordova` commands, Cordova will
   complain that the project isn't Cordova-based.
 * If you want to change the splash screen, you must re-add the platform from scratch. Rebuilding
   won't do it.
 * The splash screen file can be located in any directory, but it must *exactly* follow the naming
   convention specified in the [repo](https://goo.gl/vQPVDr), or it won't work.
+* If you run into an `Error: Error code 253 for command: ios-deploy` when running `cordova run ios`,
+  it means the phone was locked. Unlock it before launching your app.
